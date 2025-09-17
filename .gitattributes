@@ -1,0 +1,17 @@
+# Auto-detect text files and perform LF normalization
+* text=auto eol=lf
+
+# Mark lockfiles as text with LF
+*.lock text eol=lf
+
+# Treat images and media as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.svg text eol=lf
+*.ico binary
+
+# Keep Windows BAT/PS1 with CRLF if needed
+*.bat text eol=crlf
+*.ps1 text eol=crlf

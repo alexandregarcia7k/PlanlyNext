@@ -1,0 +1,37 @@
+# Ignore local and dev files during Vercel deployments
+
+# Node / package managers
+
+node_modules
+.pnp
+.yarn
+.npm
+
+# Build and cache
+
+.next/cache
+.cache
+coverage
+.nyc_output
+
+# Env files (Vercel uses project env vars)
+
+.env\*
+!.env.example
+
+# Editors / OS
+
+.vscode
+.history
+_.log
+_.swp
+_.swo
+_~
+Thumbs.db
+Desktop.ini
+
+# Test only
+
+**tests**
+**/_.spec._
+**/_.test._
