@@ -16,7 +16,25 @@
 # next.js
 /.next/
 /out/
-
+.vscode/
+.github/
+.husky/
+.next/
+.husky/
+.gitattributes
+.gitignore/
+.npmrc
+.prettierignore
+.prettierrc.json
+.vercellignore
+.eslint.conifig.mjs
+.next-env.d.ts
+.next.conifig
+.package-lock.json
+.package.json
+.postcss.config.mjs
+.tsconfig.json
+.tsconfig.tsbuildinfo
 # production
 /build
 

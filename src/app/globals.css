@@ -1,26 +1,183 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+/*
+---break---
+*/
+@custom-variant dark (&:is(.dark *));
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.141 0.005 285.823);
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.141 0.005 285.823);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.141 0.005 285.823);
+  --color-primary: oklch(0.606 0.25 292.717);
+  --color-primary-foreground: oklch(0.969 0.016 293.756);
+  --color-secondary: oklch(0.967 0.001 286.375);
+  --color-secondary-foreground: oklch(0.21 0.006 285.885);
+  --color-muted: oklch(0.967 0.001 286.375);
+  --color-muted-foreground: oklch(0.552 0.016 285.938);
+  --color-accent: oklch(0.967 0.001 286.375);
+  --color-accent-foreground: oklch(0.21 0.006 285.885);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-destructive-foreground: oklch(0.969 0.016 293.756);
+  --color-border: oklch(0.92 0.004 286.32);
+  --color-input: oklch(0.92 0.004 286.32);
+  --color-ring: oklch(0.606 0.25 292.717);
+  --color-chart-1: oklch(0.646 0.222 41.116);
+  --color-chart-2: oklch(0.6 0.118 184.704);
+  --color-chart-3: oklch(0.398 0.07 227.392);
+  --color-chart-4: oklch(0.828 0.189 84.429);
+  --color-chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.65rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.dark {
+  --color-background: oklch(0.141 0.005 285.823);
+  --color-foreground: oklch(0.985 0 0);
+  --color-card: oklch(0.21 0.006 285.885);
+  --color-card-foreground: oklch(0.985 0 0);
+  --color-popover: oklch(0.21 0.006 285.885);
+  --color-popover-foreground: oklch(0.985 0 0);
+  --color-primary: oklch(0.541 0.281 293.009);
+  --color-primary-foreground: oklch(0.969 0.016 293.756);
+  --color-secondary: oklch(0.274 0.006 286.033);
+  --color-secondary-foreground: oklch(0.985 0 0);
+  --color-muted: oklch(0.274 0.006 286.033);
+  --color-muted-foreground: oklch(0.705 0.015 286.067);
+  --color-accent: oklch(0.274 0.006 286.033);
+  --color-accent-foreground: oklch(0.985 0 0);
+  --color-destructive: oklch(0.704 0.191 22.216);
+  --color-destructive-foreground: oklch(0.985 0 0);
+  --color-border: oklch(1 0 0 / 10%);
+  --color-input: oklch(1 0 0 / 15%);
+  --color-ring: oklch(0.541 0.281 293.009);
+  --color-chart-1: oklch(0.488 0.243 264.376);
+  --color-chart-2: oklch(0.696 0.17 162.48);
+  --color-chart-3: oklch(0.769 0.188 70.08);
+  --color-chart-4: oklch(0.627 0.265 303.9);
+  --color-chart-5: oklch(0.645 0.246 16.439);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/*
+==============================================
+🎨 GUIA DE BOAS PRÁTICAS - CORES CUSTOMIZADAS
+==============================================
+
+📌 NOMENCLATURA RECOMENDADA:
+--color-[componente/área]-[variação]
+
+📌 HIERARQUIA DE BACKGROUNDS (do mais escuro ao mais claro no tema escuro):
+background → background-secondary → background-accent → background-hover
+
+📌 EXEMPLO DE ESTRUTURA COMPLETA:
+
+@theme {
+  // 🌍 FUNDOS PRINCIPAIS
+  --color-background: #ffffff;                 // Fundo principal da tela
+  --color-background-secondary: #f8f9fa;       // Cards, seções, containers
+  --color-background-accent: #f1f3f4;          // Elementos destacados
+  --color-background-hover: #e9ecef;           // Estados de hover
+
+  // 🏗️ COMPONENTES ESPECÍFICOS
+  --color-background-header: #ffffff;          // Cabeçalho/navbar
+  --color-background-sidebar: #f8f9fa;         // Barra lateral
+  --color-background-modal: #ffffff;           // Modais/popups
+  --color-background-card: #ffffff;            // Cards individuais
+  --color-background-input: #ffffff;           // Campos de input
+  --color-background-button: #f8f9fa;          // Botões secundários
+
+  // 🎯 ESTADOS INTERATIVOS
+  --color-background-active: #dee2e6;          // Estado ativo/pressionado
+  --color-background-disabled: #f8f9fa;        // Estado desabilitado
+  --color-background-selected: #e3f2fd;        // Estado selecionado
+
+  // 🚨 CORES DE STATUS
+  --color-success: #22c55e;                    // Verde para sucesso
+  --color-warning: #f59e0b;                    // Amarelo para avisos
+  --color-error: #ef4444;                      // Vermelho para erros
+  --color-info: #3b82f6;                       // Azul para informações
+
+  // 🎨 CORES DE MARCA/BRANDING
+  --color-brand-primary: #6366f1;              // Cor principal da marca
+  --color-brand-secondary: #8b5cf6;            // Cor secundária da marca
+  --color-brand-accent: #06b6d4;               // Cor de destaque
+}
+
+.dark {
+  // 🌙 TEMA ESCURO - FUNDOS
+  --color-background: #0a0a0a;                 // Fundo mais escuro
+  --color-background-secondary: #1a1a1a;       // Um pouco mais claro
+  --color-background-accent: #2a2a2a;          // Mais claro ainda
+  --color-background-hover: #333333;           // Hover mais claro
+
+  // 🏗️ COMPONENTES NO ESCURO
+  --color-background-header: #111111;
+  --color-background-sidebar: #151515;
+  --color-background-modal: #1e1e1e;
+  --color-background-card: #191919;
+  --color-background-input: #262626;
+  --color-background-button: #2a2a2a;
+
+  // 🎯 ESTADOS NO ESCURO
+  --color-background-active: #404040;
+  --color-background-disabled: #1a1a1a;
+  --color-background-selected: #1e3a8a;
+
+  // 🚨 STATUS NO ESCURO (mais suaves)
+  --color-success: #16a34a;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+  --color-info: #2563eb;
+
+  // 🎨 MARCA NO ESCURO (mais vibrantes)
+  --color-brand-primary: #7c3aed;
+  --color-brand-secondary: #a855f7;
+  --color-brand-accent: #0891b2;
+}
+
+📌 COMO USAR NO JSX:
+
+// ✅ Fundos principais
+<div className="bg-background">Tela principal</div>
+<div className="bg-background-secondary">Card ou seção</div>
+<div className="bg-background-accent">Elemento destacado</div>
+
+// ✅ Componentes específicos
+<header className="bg-background-header">Header</header>
+<aside className="bg-background-sidebar">Sidebar</aside>
+<div className="bg-background-modal">Modal</div>
+
+// ✅ Estados interativos
+<button className="bg-background-button hover:bg-background-hover active:bg-background-active">
+  Botão
+</button>
+
+// ✅ Cores de status
+<div className="bg-success text-white">Sucesso!</div>
+<div className="bg-error text-white">Erro!</div>
+<div className="bg-warning text-white">Aviso!</div>
+
+// ✅ Cores específicas pontuais (sem variável)
+<button className="bg-[#ff6b6b] text-white">Botão vermelho específico</button>
+
+📌 DICAS:
+- Use nomes semânticos (header, card, button) em vez de números (1, 2, 3)
+- Mantenha hierarquia visual clara
+- Teste sempre nos dois temas (claro e escuro)
+- Para cores pontuais, use bg-[#cor] diretamente
+- Para cores que se repetem muito, crie variáveis
+*/
+
+/*
+---break---
+*/
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
 }
