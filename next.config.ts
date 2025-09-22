@@ -1,13 +1,6 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': { loaders: ['@svgr/webpack'], as: '*.js' },
-      },
-    },
-  },
   images: {
     remotePatterns: [
       {
@@ -19,6 +12,11 @@ const nextConfig: NextConfig = {
         hostname: 'html.tailus.io',
       },
     ],
+  },
+  turbopack: {
+    rules: {
+      '*.svg': { loaders: ['@svgr/webpack'], as: '*.js' },
+    }
   },
 };
 

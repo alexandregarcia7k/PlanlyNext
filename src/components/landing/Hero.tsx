@@ -7,26 +7,7 @@ import Image from 'next/image';
 import { TextEffect } from '../ui/text-effect';
 import { AnimatedGroup } from '../ui/animated-group';
 import { Header } from '../landing/Header';
-
-const transitionVariants = {
-  item: {
-    hidden: {
-      opacity: 0,
-      filter: 'blue(12px)',
-      y: 12,
-    },
-    visible: {
-      opacity: 1,
-      filter: 'blue(12px)',
-      y: 0,
-      transition: {
-        type: 'spring' as const,
-        bounce: 0.3,
-        duration: 1.5,
-      },
-    },
-  },
-};
+import { animationVariants } from '../ui/animations';
 
 export default function Hero() {
   return (
@@ -35,12 +16,43 @@ export default function Hero() {
       <main className="overflow-hidden">
         <div
           aria-hidden
-          className="absolute inset-0 isolate hidden opacity-65 contain-strict lg:block"
+          className="absolute inset-0 isolate opacity-100 contain-strict lg:block"
         >
-          <div className="w-140 h-320 -translate-y-87.5 absolute left-0 top-0 -rotate-45 rounded-full bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]" />
-          <div className="h-320 absolute left-0 top-0 w-60 -rotate-45 rounded-full bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)] [translate:5%_-50%]" />
-          <div className="h-320 -translate-y-87.5 absolute left-0 top-0 w-60 -rotate-45 bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]" />
+          <div
+            className="
+              absolute left-0 top-0 -rotate-45 -translate-y-87.5 w-140 h-320 rounded-full
+              /* LIGHT: feixe roxo elegante (fade longo) */
+              bg-[linear-gradient(115deg,rgba(67,25,97,0.16)_0%,rgba(160,120,220,0.10)_38%,rgba(67,25,97,0)_78%)]
+              mix-blend-screen blur-3xl
+              /* DARK: exatamente o seu original */
+              dark:bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]
+              dark:mix-blend-normal dark:blur-none
+            "
+          />
+          <div
+            className="
+              absolute left-0 top-0 -rotate-45 [translate:5%_-50%] w-60 h-320 rounded-full
+              /* LIGHT: corpo do feixe (lavanda leve) */
+              bg-[radial-gradient(60%_60%_at_55%_45%,rgba(195,150,240,0.14)_0,rgba(67,25,97,0.06)_55%,transparent_100%)]
+              mix-blend-screen blur-2xl
+              /* DARK: seu original */
+              dark:bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]
+              dark:mix-blend-normal dark:blur-none
+            "
+          />
+          <div
+            className="
+              absolute left-0 top-0 -rotate-45 -translate-y-87.5 w-60 h-320 rounded-full
+              /* LIGHT: highlight especular do feixe */
+              bg-[radial-gradient(35%_35%_at_65%_30%,rgba(255,255,255,0.22)_0,rgba(167,139,250,0.12)_30%,transparent_70%)]
+              mix-blend-screen blur-2xl
+              /* DARK: seu original */
+              dark:bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]
+              dark:mix-blend-normal dark:blur-none
+            "
+          />
         </div>
+
         <section>
           <div className="relative pt-24 md:pt-36">
             <AnimatedGroup
@@ -86,13 +98,13 @@ export default function Hero() {
 
             <div className="mx-auto max-w-7xl px-6">
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
-                <AnimatedGroup variants={transitionVariants}>
+                <AnimatedGroup variants={animationVariants.heroText}>
                   <Link
                     href="#link"
                     className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
                   >
                     <span className="text-foreground text-sm">
-                      Introducing Support for AI Models
+                      Confira nossas funcionalidades
                     </span>
                     <span className="dark:border-background block h-4 w-0.5 border-l bg-white dark:bg-zinc-700"></span>
 
@@ -115,7 +127,7 @@ export default function Hero() {
                   as="h1"
                   className="mx-auto mt-8 max-w-4xl text-balance text-5xl max-md:font-semibold md:text-7xl lg:mt-16 xl:text-[5.25rem]"
                 >
-                  Modern Solutions for Customer Engagement
+                    Ser organizado e produtivo não precisa ser complicado
                 </TextEffect>
                 <TextEffect
                   per="line"
@@ -125,8 +137,7 @@ export default function Hero() {
                   as="p"
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg"
                 >
-                  Highly customizable components for building modern websites and applications that
-                  look and feel the way you mean it.
+                  Um aplicativo para te acompanhar no dia a dia, seja no trabalho, vida pessoal, para estudos de onde você quiser, quando quiser.
                 </TextEffect>
 
                 <AnimatedGroup
@@ -139,7 +150,7 @@ export default function Hero() {
                         },
                       },
                     },
-                    ...transitionVariants,
+                    ...animationVariants.heroText,
                   }}
                   className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
                 >
@@ -149,7 +160,7 @@ export default function Hero() {
                   >
                     <Button asChild size="lg" className="rounded-xl px-5 text-base">
                       <Link href="#link">
-                        <span className="text-nowrap">Start Building</span>
+                        <span className="text-nowrap">Começar</span>
                       </Link>
                     </Button>
                   </div>
@@ -161,7 +172,7 @@ export default function Hero() {
                     className="h-10.5 rounded-xl px-5"
                   >
                     <Link href="#link">
-                      <span className="text-nowrap">Request a demo</span>
+                      <span className="text-nowrap">Versão demo</span>
                     </Link>
                   </Button>
                 </AnimatedGroup>
@@ -169,30 +180,20 @@ export default function Hero() {
             </div>
 
             <AnimatedGroup
-              variants={{
-                container: {
-                  visible: {
-                    transition: {
-                      staggerChildren: 0.05,
-                      delayChildren: 0.75,
-                    },
-                  },
-                },
-                ...transitionVariants,
-              }}
+              variants={animationVariants.heroImageEntrance}
             >
               <div className="mask-b-from-55% relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
                   <Image
                     className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
-                    src="/mail2.png"
+                    src="/assets/kanbandark.png"
                     alt="app screen"
                     width="2700"
                     height="1440"
                   />
                   <Image
                     className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                    src="/mail2-light.png"
+                    src="/assets/kanbanlight.png"
                     alt="app screen"
                     width="2700"
                     height="1440"
@@ -202,7 +203,7 @@ export default function Hero() {
             </AnimatedGroup>
           </div>
         </section>
-        <section className="bg-background pb-16 pt-16 md:pb-32">
+        {/* <section className="bg-background pb-16 pt-16 md:pb-32">
           <div className="group relative m-auto max-w-5xl px-6">
             <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
               <Link href="/" className="block text-sm duration-150 hover:opacity-75">
@@ -288,7 +289,7 @@ export default function Hero() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
       </main>
     </>
   );
