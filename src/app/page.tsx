@@ -1,7 +1,11 @@
 import Hero from '@/components/landing/Hero';
 import Features from '@/components/landing/Features';
 import Features2 from '@/components/landing/Features2';
-import Features4 from '@/components/landing/Features3';
+import Features3 from '@/components/landing/Features3';
+import Parallax from '@/components/landing/Parallax';
+import Contact from '@/components/landing/Contact';
+import Footer from '@/components/landing/Footer';
+
 
 export default function LandingPage() {
   return (
@@ -9,8 +13,11 @@ export default function LandingPage() {
       <div>
         <Hero />
         <Features />
+        <Parallax />
         <Features2 />
-        <Features4 />
+        <Features3 />
+        <Contact />
+        <Footer />
       </div>
     </main>
   );

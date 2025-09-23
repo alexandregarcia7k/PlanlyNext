@@ -1,5 +1,5 @@
 'use client'
-import { Cpu, Lock, Sparkles, Zap } from 'lucide-react'
+import { ChartLine, SquareKanban, AlarmClockCheck, NotebookTabs } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
@@ -20,14 +20,14 @@ export default function FeaturesSection() {
                         delay={0.2}
                         className="text-4xl font-semibold lg:text-5xl"
                     >
-                        <h2>Built for Scaling teams</h2>
+                        <h2>Produtividade, Organização e Simplicidade</h2>
                     </AnimatedElement>
                     <AnimatedElement
                         variant="featuresText"
                         delay={0.4}
                         className="mt-6 text-lg"
                     >
-                        <p>Empower your team with workflows that adapt to your needs, whether you prefer git synchronization or a AI Agents interface.</p>
+                        <p>Organize seu trabalho, estudos, finanças e rotina <br />De forma <span className='text-primary font-extrabold '>SIMPLES</span> e <span className='text-primary font-extrabold '>EFICAZ.</span></p>
                     </AnimatedElement>
                 </div>
                 <ScrollTiltImage
@@ -67,32 +67,32 @@ export default function FeaturesSection() {
                 <div className="relative mx-auto grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-8 lg:grid-cols-4">
                     <div className="space-y-3">
                         <div className="flex items-center gap-2">
-                            <Zap className="size-4" />
-                            <h3 className="text-sm font-medium">Faaast</h3>
+                            <ChartLine className="size-4" />
+                            <h3 className="text-sm font-medium">Analytics</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm">It supports an entire helping developers and innovate.</p>
+                        <p className="text-muted-foreground text-sm">Tenha controle sobre sua produtividade, visualize relatórios e gráficos de desempenho.</p>
                     </div>
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                            <Cpu className="size-4" />
-                            <h3 className="text-sm font-medium">Powerful</h3>
+                            <SquareKanban className="size-4" />
+                            <h3 className="text-sm font-medium">Kanban</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm">It supports an entire helping developers and businesses.</p>
+                        <p className="text-muted-foreground text-sm">Organize suas tarefas e projetos de forma visual e intuitiva.</p>
                     </div>
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                            <Lock className="size-4" />
-                            <h3 className="text-sm font-medium">Security</h3>
+                            <AlarmClockCheck className="size-4" />
+                            <h3 className="text-sm font-medium">Timer Pomodoro</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm">It supports an helping developers businesses innovate.</p>
+                        <p className="text-muted-foreground text-sm">Aumente sua produtividade com o método Pomodoro.</p>
                     </div>
                     <div className="space-y-2">
                         <div className="flex items-center gap-2">
-                            <Sparkles className="size-4" />
+                            <NotebookTabs className="size-4" />
 
-                            <h3 className="text-sm font-medium">AI Powered</h3>
+                            <h3 className="text-sm font-medium">Notas</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm">It supports an helping developers businesses innovate.</p>
+                        <p className="text-muted-foreground text-sm">Crie, organize e compartilhe suas notas de forma simples e eficiente.</p>
                     </div>
                 </div>
             </div>

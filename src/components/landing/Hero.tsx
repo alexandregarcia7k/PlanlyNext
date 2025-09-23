@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, ChevronRight } from 'lucide-react';
+import { ArrowRight} from 'lucide-react';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { TextEffect } from '../ui/text-effect';
@@ -127,7 +127,7 @@ export default function Hero() {
                   as="h1"
                   className="mx-auto mt-8 max-w-4xl text-balance text-5xl max-md:font-semibold md:text-7xl lg:mt-16 xl:text-[5.25rem]"
                 >
-                    Ser organizado e produtivo não precisa ser complicado
+                    Ser produtivo e organizado não é complicado.
                 </TextEffect>
                 <TextEffect
                   per="line"
@@ -137,7 +137,7 @@ export default function Hero() {
                   as="p"
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg"
                 >
-                  Um aplicativo para te acompanhar no dia a dia, seja no trabalho, vida pessoal, para estudos de onde você quiser, quando quiser.
+                  Ferramentas para aumentar sua produtividade e organizar sua vida de forma simples e eficaz.
                 </TextEffect>
 
                 <AnimatedGroup
