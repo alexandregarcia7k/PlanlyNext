@@ -1,9 +1,9 @@
 import { Card, CardContent } from '@/components/ui/card'
-import { Shield, Users } from 'lucide-react'
+import { ChartNoAxesCombined, MonitorCog } from 'lucide-react'
 
 export default function FeaturesSection() {
     return (
-    <section className="bg-transparent pt-0 pb-16 md:pt-0 md:pb-32 dark:bg-transparent">
+    <section id="features2" className="bg-transparent pt-0 pb-16 md:pt-0 md:pb-32 dark:bg-transparent">
             <div className="mx-auto max-w-5xl px-6">
                 <div className="relative">
                     <div className="relative z-10 grid grid-cols-6 gap-3">
@@ -22,7 +22,7 @@ export default function FeaturesSection() {
                                     </svg>
                                     <span className="mx-auto block w-fit text-5xl font-semibold">100%</span>
                                 </div>
-                                <h2 className="mt-6 text-center text-3xl font-semibold">Customizable</h2>
+                                <h2 className="mt-6 text-center text-3xl font-semibold">Intuitivo</h2>
                             </CardContent>
                         </Card>
                         <Card className="relative col-span-full overflow-hidden sm:col-span-3 lg:col-span-2 bg-transparent">
@@ -81,8 +81,8 @@ export default function FeaturesSection() {
                                     </svg>
                                 </div>
                                 <div className="relative z-10 mt-6 space-y-2 text-center">
-                                    <h2 className="group-hover:text-secondary-950 text-lg font-medium transition dark:text-white">Secure by default</h2>
-                                    <p className="text-foreground">Provident fugit and vero voluptate. magnam magni doloribus dolores voluptates a sapiente nisi.</p>
+                                    <h2 className="group-hover:text-secondary-950 text-lg font-medium transition dark:text-white">Sua Identidade</h2>
+                                    <p className="text-foreground">Tenha sua própia identidade em nosso aplicativo.</p>
                                 </div>
                             </CardContent>
                         </Card>
@@ -173,8 +173,8 @@ export default function FeaturesSection() {
                                     </svg>
                                 </div>
                                 <div className="relative z-10 mt-14 space-y-2 text-center">
-                                    <h2 className="text-lg font-medium transition">Faster than light</h2>
-                                    <p className="text-foreground">Provident fugit vero voluptate. magnam magni doloribus dolores voluptates inventore nisi.</p>
+                                    <h2 className="text-lg font-medium transition">Leve e rapido</h2>
+                                    <p className="text-foreground">Rápido e leve, otimizado para desempenho.</p>
                                 </div>
                             </CardContent>
                         </Card>
@@ -182,14 +182,14 @@ export default function FeaturesSection() {
                             <CardContent className="grid pt-6 sm:grid-cols-2">
                                 <div className="relative z-10 flex flex-col justify-between space-y-12 lg:space-y-6">
                                     <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 dark:before:border-white/5">
-                                        <Shield
+                                        <ChartNoAxesCombined
                                             className="m-auto size-5"
                                             strokeWidth={1}
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <h2 className="group-hover:text-secondary-950 text-lg font-medium text-zinc-800 transition dark:text-white">Faster than light</h2>
-                                        <p className="text-foreground">Provident fugit vero voluptate. Voluptates a sapiente inventore nisi.</p>
+                                        <h2 className="group-hover:text-secondary-950 text-lg font-medium text-zinc-800 transition dark:text-white">Analytics</h2>
+                                        <p className="text-foreground">Acompanhe o seu desempenho com gráficos e relatórios detalhados.</p>
                                     </div>
                                 </div>
                                 <div className="rounded-tl-(--radius) relative -mb-6 -mr-6 mt-6 h-fit border-l border-t p-6 py-6 sm:ml-6">
@@ -243,47 +243,23 @@ export default function FeaturesSection() {
                             <CardContent className="grid h-full pt-6 sm:grid-cols-2">
                                 <div className="relative z-10 flex flex-col justify-between space-y-12 lg:space-y-6">
                                     <div className="relative flex aspect-square size-12 rounded-full border before:absolute before:-inset-2 before:rounded-full before:border dark:border-white/10 dark:before:border-white/5">
-                                        <Users
+                                        <MonitorCog
                                             className="m-auto size-6"
                                             strokeWidth={1}
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <h2 className="text-lg font-medium transition">Keep your loved ones safe</h2>
-                                        <p className="text-foreground">Voluptate. magnam magni doloribus dolores voluptates a sapiente inventore nisi.</p>
+                                        <h2 className="text-lg font-medium transition">Acessivel</h2>
+                                        <p className="text-foreground">Planly é web, tenha controle de qualquer dispositivo de onde quiser.</p>
                                     </div>
                                 </div>
                                 <div className="before:bg-(--color-border) relative mt-6 before:absolute before:inset-0 before:mx-auto before:w-px sm:-my-6 sm:-mr-6">
                                     <div className="relative flex h-full flex-col justify-center space-y-6 py-6">
                                         <div className="relative flex w-[calc(50%+0.875rem)] items-center justify-end gap-2">
-                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm">Likeur</span>
-                                            <div className="ring-background size-7 ring-4">
-                                                <img
-                                                    className="size-full rounded-full"
-                                                    src="https://avatars.githubusercontent.com/u/102558960?v=4"
-                                                    alt=""
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="relative ml-[calc(50%-1rem)] flex items-center gap-2">
-                                            <div className="ring-background size-8 ring-4">
-                                                <img
-                                                    className="size-full rounded-full"
-                                                    src="https://avatars.githubusercontent.com/u/47919550?v=4"
-                                                    alt=""
-                                                />
-                                            </div>
-                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm">M. Irung</span>
+                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm">Desktop</span>
                                         </div>
                                         <div className="relative flex w-[calc(50%+0.875rem)] items-center justify-end gap-2">
-                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm">B. Ng</span>
-                                            <div className="ring-background size-7 ring-4">
-                                                <img
-                                                    className="size-full rounded-full"
-                                                    src="https://avatars.githubusercontent.com/u/31113941?v=4"
-                                                    alt=""
-                                                />
-                                            </div>
+                                            <span className="block h-fit rounded border px-2 py-1 text-xs shadow-sm justify-end">Mobile</span>
                                         </div>
                                     </div>
                                 </div>

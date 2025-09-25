@@ -12,8 +12,8 @@ export default function FeaturesSection() {
     const { rotateY, rotateX, scale } = useScrollTilt(ref as React.RefObject<HTMLDivElement>)
 
     return (
-        <section className="overflow-hidden py-16 md:py-32">
-            <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-12">
+        <section id="features" className="overflow-hidden py-16 md:py-32">
+            <div className="relative mx-auto max-w-5xl space-y-8 px-6 md:space-y-12">
                 <div className="relative z-10 max-w-2xl">
                     <AnimatedElement
                         variant="featuresText"
@@ -64,35 +64,51 @@ export default function FeaturesSection() {
                         </div>
                     </div>
                 </ScrollTiltImage>
-                <div className="relative mx-auto grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-8 lg:grid-cols-4">
+                <div className="relative mx-auto grid grid-cols-2 gap-x-3 gap-y-6 sm:gap-8 lg:grid-cols-4 pt-20">
                     <div className="space-y-3">
                         <div className="flex items-center gap-2">
                             <ChartLine className="size-4" />
                             <h3 className="text-sm font-medium">Analytics</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm">Tenha controle sobre sua produtividade, visualize relatórios e gráficos de desempenho.</p>
+                        <p className="text-muted-foreground text-sm max-w-[30ch] leading-6">
+                            <span className="block">Visualize relatórios, gráficos e</span>
+                            <span className="block">acompanhe a trajetória do seu</span>
+                            <span className="block">desempenho</span>
+                        </p>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                         <div className="flex items-center gap-2">
                             <SquareKanban className="size-4" />
                             <h3 className="text-sm font-medium">Kanban</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm">Organize suas tarefas e projetos de forma visual e intuitiva.</p>
+                        <p className="text-muted-foreground text-sm max-w-[28ch] leading-6">
+                            <span className="block">Organize tarefas e projetos</span>
+                            <span className="block">com quadro visual e controle</span>
+                            <span className="block">intuitivo</span>
+                        </p>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                         <div className="flex items-center gap-2">
                             <AlarmClockCheck className="size-4" />
                             <h3 className="text-sm font-medium">Timer Pomodoro</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm">Aumente sua produtividade com o método Pomodoro.</p>
+                        <p className="text-muted-foreground text-sm max-w-[28ch] leading-6">
+                            <span className="block">Aumente sua produtividade com</span>
+                            <span className="block">Pomodoro e sessões de estudo</span>
+                            <span className="block">focadas</span>
+                        </p>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                         <div className="flex items-center gap-2">
                             <NotebookTabs className="size-4" />
 
                             <h3 className="text-sm font-medium">Notas</h3>
                         </div>
-                        <p className="text-muted-foreground text-sm">Crie, organize e compartilhe suas notas de forma simples e eficiente.</p>
+                        <p className="text-muted-foreground text-sm max-w-[28ch] leading-6">
+                            <span className="block">Crie, organize e compartilhe</span>
+                            <span className="block">notas de maneira simples e</span>
+                            <span className="block">eficiente</span>
+                        </p>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react'
 import { Button } from '../ui/button'
 import React from 'react'
 import { cn } from '@/lib/utils'
+import { animate } from 'framer-motion'
 import { ThemeSwitcher } from '../ui/kibo-ui/theme-switcher'
 
 const menuItems = [
@@ -27,7 +28,7 @@ export const Header = () => {
   return (
     <header>
       {/* 1) nav ocupa a largura inteira, sem padding que “puxa” pro lado */}
-      <nav data-state={menuState && 'active'} className="fixed inset-x-0 z-20">
+  <nav data-state={menuState && 'active'} className="fixed inset-x-0 z-50">
         {/* 2) container centralizado com paddings simétricos em todos breakpoints */}
         <div
           data-shrunk={isScrolled}
@@ -44,8 +45,23 @@ export const Header = () => {
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
 
             <div className="flex w-full justify-between lg:w-auto">
-              <Link href="/" aria-label="home" className="flex item-center space-x-2">
-              <Logo />
+              <Link
+                href="#hero"
+                aria-label="home"
+                className="flex items-center space-x-2 cursor-pointer"
+                onClick={e => {
+                  e.preventDefault();
+                  const el = document.getElementById('hero');
+                  if (el) {
+                    animate(window.scrollY, el.offsetTop, {
+                      duration: 1,
+                      ease: [0.22, 1, 0.36, 1],
+                      onUpdate: v => window.scrollTo({ top: v })
+                    });
+                  }
+                }}
+              >
+                <Logo />
               </Link>
 
               <button
@@ -58,8 +74,8 @@ export const Header = () => {
               </button>
             </div>
 
-            {/* menu central (desktop), fica absolutamente centralizado */}
-            <div className="absolute inset-0 m-auto hidden w-full lg:flex items-center justify-center">
+            {/* menu central (desktop), centralizado sem absolute para não cobrir o logo */}
+            <div className="hidden lg:flex flex-1 items-center justify-center">
               <ul className="flex gap-8 text-sm">
                 {menuItems.map((item) => (
                   <li key={item.name}>

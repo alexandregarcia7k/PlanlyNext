@@ -12,9 +12,12 @@ import {
 } from "@/components/ui/tooltip"
 import { Facebook, Instagram, Linkedin, Send, Twitter } from "lucide-react"
 import { ThemeSwitcher } from '@/components/ui/kibo-ui/theme-switcher'
+import { useFramerScroll } from "@/hooks/use-framer-scroll"
 
 function Footerdemo() {
-  // footer demo state intentionally minimal; theme switching handled by ThemeSwitcher
+  const { scrollTo } = useFramerScroll();
+
+
 
   return (
     <footer className="relative border-t bg-background text-foreground transition-colors duration-300">
@@ -45,30 +48,30 @@ function Footerdemo() {
           <div>
             <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
             <nav className="space-y-2 text-sm">
-              <a href="#" className="block transition-colors hover:text-primary">
+              <button onClick={() => scrollTo('hero')} className="block transition-colors hover:text-primary cursor-pointer text-left">
                 Home
-              </a>
-              <a href="#" className="block transition-colors hover:text-primary">
-                About Us
-              </a>
-              <a href="#" className="block transition-colors hover:text-primary">
+              </button>
+              <button onClick={() => scrollTo('features')} className="block transition-colors hover:text-primary cursor-pointer text-left">
+                Features
+              </button>
+              <button onClick={() => scrollTo('parallax')} className="block transition-colors hover:text-primary cursor-pointer text-left">
+                About
+              </button>
+              <button onClick={() => scrollTo('features3')} className="block transition-colors hover:text-primary cursor-pointer text-left">
                 Services
-              </a>
-              <a href="#" className="block transition-colors hover:text-primary">
-                Products
-              </a>
-              <a href="#" className="block transition-colors hover:text-primary">
+              </button>
+              <button onClick={() => scrollTo('contact')} className="block transition-colors hover:text-primary cursor-pointer text-left">
                 Contact
-              </a>
+              </button>
             </nav>
           </div>
           <div>
             <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
             <address className="space-y-2 text-sm not-italic">
-              <p>123 Innovation Street</p>
-              <p>Tech City, TC 12345</p>
-              <p>Phone: (123) 456-7890</p>
-              <p>Email: hello@example.com</p>
+              <p></p>
+              <p></p>
+              <p></p>
+              <p>Email: suggestions@planly.com</p>
             </address>
           </div>
           <div className="relative">
@@ -134,7 +137,7 @@ function Footerdemo() {
         </div>
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 text-center md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © 2024 Your Company. All rights reserved.
+            © 2025 Planly. Todos os .
           </p>
           <nav className="flex gap-4 text-sm">
             <a href="#" className="transition-colors hover:text-primary">

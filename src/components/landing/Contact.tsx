@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 
 export default function DefaultDemo() {
 	return (
-		<main className="relative flex w-full items-center justify-center px-4 sm:px-8 pb-32">
+		<section id="contact" className="relative flex w-full items-center justify-center px-4 sm:px-8 pb-32">
 			<div className="mx-auto max-w-5xl">
 				<ContactCard
 					title="Faça sua Sugestão"
@@ -54,6 +54,6 @@ export default function DefaultDemo() {
 					</form>
 				</ContactCard>
 			</div>
-		</main>
+		</section>
 	);
 }

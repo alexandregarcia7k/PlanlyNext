@@ -39,6 +39,7 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
 	return (
 		<div ref={container} className="relative h-[300vh]">
 			<div className="sticky top-0 h-screen overflow-hidden">
+
 				{/* Spotlight that sits behind the icons when zoom finishes */}
 				<motion.div
 					style={{ opacity: spotlightOpacity, scale: spotlightScale }}
@@ -58,8 +59,8 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
 						>
 							<div className={`relative z-10 flex items-center justify-center text-black dark:text-white ${index === 0 ? 'h-[8vh] w-[8vw]' : 'h-[25vh] w-[25vw]'}`}>
 								{Icon ? (
-									<Icon className="h-full w-full object-contain text-black dark:text-white" />
-								) : (
+										<Icon className="h-full w-full object-contain text-black dark:text-white" />
+									) : (
 									<Image
 										src={src || '/placeholder.svg'}
 										alt={alt || `Parallax image ${index + 1}`}

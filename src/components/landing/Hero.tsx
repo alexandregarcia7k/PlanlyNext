@@ -13,7 +13,7 @@ export default function Hero() {
   return (
     <>
       <Header />
-      <main className="overflow-hidden">
+      <main className="overflow-hidden" id="hero">
         <div
           aria-hidden
           className="absolute inset-0 isolate opacity-100 contain-strict lg:block"
@@ -32,10 +32,8 @@ export default function Hero() {
           <div
             className="
               absolute left-0 top-0 -rotate-45 [translate:5%_-50%] w-60 h-320 rounded-full
-              /* LIGHT: corpo do feixe (lavanda leve) */
               bg-[radial-gradient(60%_60%_at_55%_45%,rgba(195,150,240,0.14)_0,rgba(67,25,97,0.06)_55%,transparent_100%)]
               mix-blend-screen blur-2xl
-              /* DARK: seu original */
               dark:bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]
               dark:mix-blend-normal dark:blur-none
             "
@@ -43,10 +41,8 @@ export default function Hero() {
           <div
             className="
               absolute left-0 top-0 -rotate-45 -translate-y-87.5 w-60 h-320 rounded-full
-              /* LIGHT: highlight especular do feixe */
               bg-[radial-gradient(35%_35%_at_65%_30%,rgba(255,255,255,0.22)_0,rgba(167,139,250,0.12)_30%,transparent_70%)]
               mix-blend-screen blur-2xl
-              /* DARK: seu original */
               dark:bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]
               dark:mix-blend-normal dark:blur-none
             "
@@ -184,13 +180,13 @@ export default function Hero() {
             >
               <div className="mask-b-from-55% relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
-                  <Image
-                    className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
-                    src="/assets/kanbandark.png"
-                    alt="app screen"
-                    width="2700"
-                    height="1440"
-                  />
+                    <Image
+                      className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
+                      src="/assets/kanbandark.png"
+                      alt="app screen"
+                      width="2700"
+                      height="1440"
+                    />
                   <Image
                     className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
                     src="/assets/kanbanlight.png"

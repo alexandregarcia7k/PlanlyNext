@@ -15,7 +15,7 @@ const themes = [
 export type ThemeSwitcherProps = { className?: string };
 
 export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
@@ -58,8 +58,14 @@ export const ThemeSwitcher = ({ className }: ThemeSwitcherProps) => {
             <Icon
               className={cn(
                 'relative z-10 h-4 w-4 transition-colors duration-200',
+                // ensure sufficient contrast when the Light theme is active:
+                // primary-foreground is intentionally light (white), which can be
+                // invisible on light backgrounds. Prefer the base foreground color
+                // for the sun (light) variant so the icon remains visible.
                 isActive
-                  ? 'text-primary-foreground'
+                  ? (key === 'light' || (key === 'system' && resolvedTheme === 'light')
+                      ? 'text-foreground'
+                      : 'text-primary-foreground')
                   : 'text-muted-foreground hover:text-foreground'
               )}
             />

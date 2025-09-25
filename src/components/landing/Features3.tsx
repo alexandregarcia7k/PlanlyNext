@@ -6,42 +6,34 @@ import {cn, EmptyState } from "@/components/interactive-empty-state";
 import { motion } from 'framer-motion';
 import {
   Plus,
-  GraduationCap,
-  Code,
   FolderOpen,
-  Palette,
-  Moon,
-  ShieldAlert,
-  XCircle,
-  Bookmark,Library,MousePointerClick,
-  Sun,
-  Briefcase,
-  AlertCircle,
-  Code2,
-  Wrench,
-  Zap,
-  Rocket,
+  MousePointerClick,
   TrendingUp,
-  Award,
   BookOpen,
-  Medal
+  SquareKanban,
+  ListChecks,
+  AlarmClockCheck,
+  Calculator,
+  NotebookTabs
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function EmptyStateShowcase() {
 
+  const [mounted, setMounted] = React.useState(false);
   const { resolvedTheme } = useTheme();
+  const handleAction: HandleAction = useCallback((section: string) => {
+    console.log(`Action triggered for: ${section}`);
+  }, []);
+  React.useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
+  // Evita hydration mismatch usando tema padrão
+  const theme = resolvedTheme === 'dark' ? 'dark' : resolvedTheme === 'neutral' ? 'neutral' : 'light';
 
   interface HandleAction {
     (section: string): void;
   }
-
-  const handleAction: HandleAction = useCallback((section: string) => {
-    console.log(`Action triggered for: ${section}`);
-  }, []);
-
-  const theme = resolvedTheme === 'dark' ? 'dark' : resolvedTheme === 'neutral' ? 'neutral' : resolvedTheme === 'light' ? 'light' : undefined;
-
-  if (!theme) return null
 
   interface MotionDivProps {
     delay: number;
@@ -67,7 +59,8 @@ export default function EmptyStateShowcase() {
   };
 
   return (
-    <div
+    <section
+      id="features3"
       className={cn(
         "font-sans px-4 sm:px-8 pb-32",
         theme === 'dark'
@@ -91,33 +84,50 @@ export default function EmptyStateShowcase() {
           {motionDiv(0.2,
             <EmptyState
               theme={theme}
-              title="No Projects Added"
-              description="Showcase your work by adding personal projects, open-source contributions, or other achievements."
-              icons={[<FolderOpen key="p1" className="h-6 w-6" />, <Code2 key="p2" className="h-6 w-6" />, <Rocket key="p3" className="h-6 w-6" />]}
-              action={{ label: "Add Project", icon: <Plus className="h-4 w-4" />, onClick: () => handleAction("Projects") }}
+              title="Organização Visual"
+              description="Gerencie tarefas, projetos e ideias com quadros Kanban, listas e categorias personalizadas."
+              icons={[<SquareKanban key="k1" className="h-6 w-6" />, <FolderOpen key="k2" className="h-6 w-6" />, <ListChecks key="k3" className="h-6 w-6" />]}
+              action={{ label: "Explorar Kanban", icon: <Plus className="h-4 w-4" />, onClick: () => toast.error("Não disponível.", {
+                description: "Esse recurso ainda não está disponível.",
+                action: {
+                  label: "OK",
+                  onClick: () => { /* Ação adicional se necessário */ }
+                }
+              }) }}
             />
           )}
-          {motionDiv(0.2,
+          {motionDiv(0.3,
             <EmptyState
               theme={theme}
-              title="No Projects Added"
-              description="Showcase your work by adding personal projects, open-source contributions, or other achievements."
-              icons={[<FolderOpen key="p1" className="h-6 w-6" />, <Code2 key="p2" className="h-6 w-6" />, <Rocket key="p3" className="h-6 w-6" />]}
-              action={{ label: "Add Project", icon: <Plus className="h-4 w-4" />, onClick: () => handleAction("Projects") }}
+              title="Foco e Eficiência"
+              description="Utilize Timer Pomodoro, calculadoras e ferramentas de análise para aumentar sua produtividade e manter o foco."
+              icons={[<AlarmClockCheck key="t1" className="h-6 w-6" />, <Calculator key="t2" className="h-6 w-6" />, <TrendingUp key="t3" className="h-6 w-6" />]}
+              action={{ label: "Iniciar Pomodoro", icon: <Plus className="h-4 w-4" />, onClick: () => toast.error("Não disponível.", {
+                description: "Esse recurso ainda não está disponível.",
+                action: {
+                  label: "OK",
+                  onClick: () => { /* Ação adicional se necessário */ }
+                }
+              }) }}
             />
           )}
-          {motionDiv(0.2,
+          {motionDiv(0.4,
             <EmptyState
               theme={theme}
-              title="No Projects Added"
-              description="Showcase your work by adding personal projects, open-source contributions, or other achievements."
-              icons={[<FolderOpen key="p1" className="h-6 w-6" />, <Code2 key="p2" className="h-6 w-6" />, <Rocket key="p3" className="h-6 w-6" />]}
-              action={{ label: "Add Project", icon: <Plus className="h-4 w-4" />, onClick: () => handleAction("Projects") }}
+              title="Anotações Inteligentes"
+              description="Crie, edite e compartilhe notas, links e insights de forma rápida e integrada ao seu fluxo de trabalho."
+              icons={[<NotebookTabs key="n1" className="h-6 w-6" />, <BookOpen key="n2" className="h-6 w-6" />, <MousePointerClick key="n3" className="h-6 w-6" />]}
+              action={{ label: "Nova Nota", icon: <Plus className="h-4 w-4" />, onClick: () => toast.error("Não disponível.", {
+                description: "Esse recurso ainda não está disponível.",
+                action: {
+                  label: "OK",
+                  onClick: () => { /* Ação adicional se necessário */ }
+                }
+              }) }}
             />
           )}
-
         </main>
       </div>
-    </div>
+    </section>
   );
 }

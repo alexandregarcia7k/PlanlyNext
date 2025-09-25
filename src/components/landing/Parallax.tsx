@@ -37,7 +37,7 @@ export default function DefaultDemo() {
 	const titleInView = useInView(titleRef, { once: true, amount: 0.45 });
 
 	return (
-		<main className="min-h-screen w-full">
+		<section id="parallax" className="min-h-screen w-full">
 			<div className="relative flex h-[50vh] items-center justify-center">
 				{/* Radial spotlight */}
 				<div
@@ -72,6 +72,6 @@ export default function DefaultDemo() {
 			<ZoomParallax images={images} />
 
 
-		</main>
+		</section>
 	);
 }
