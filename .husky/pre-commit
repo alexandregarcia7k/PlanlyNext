@@ -1,5 +1,0 @@
-
-npx --no-install lint-staged
-npm test
- npx --no-install lint-staged
- npm test

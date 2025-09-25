@@ -9,8 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "prepare": "husky"
+  "format:check": "prettier --check ."
+
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -58,5 +58,4 @@
     "tailwindcss": "^4",
     "typescript": "^5"
   }
-
 }
