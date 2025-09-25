@@ -2,7 +2,7 @@
 import React, { useRef } from 'react';
 import { useInView } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import Lenis from '@studio-freight/lenis'
+import Lenis from 'lenis'
 import { ZoomParallax } from "@/components/zoom-parallax";
 import { LogoIcon } from '@/components/landing/logo';
 import { BookOpenText, Dumbbell, House, Briefcase, CalendarFold, HandCoins } from 'lucide-react';

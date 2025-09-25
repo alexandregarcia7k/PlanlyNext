@@ -1,5 +1,5 @@
 import { ContactCard } from "@/components/contact-card";
-import { MailIcon, PhoneIcon, MapPinIcon } from 'lucide-react';
+import { MailIcon } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';

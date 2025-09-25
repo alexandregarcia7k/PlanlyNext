@@ -13,7 +13,7 @@ export default function FeaturesSection() {
 
     return (
         <section id="features" className="overflow-hidden py-16 md:py-32">
-            <div className="relative mx-auto max-w-5xl space-y-8 px-6 md:space-y-12">
+            <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-12">
                 <div className="relative z-10 max-w-2xl">
                     <AnimatedElement
                         variant="featuresText"

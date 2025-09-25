@@ -29,9 +29,28 @@ const BUTTON_VARIANTS = {
   animate: { y: 0, opacity: 1, transition: { duration: 0.4, delay: 0.3 } },
 };
 
-export const cn = (...classes) => classes.filter(Boolean).join(' ');
+export interface ClassNameArg {
+  [key: string]: boolean | undefined | null;
+}
 
-const IconContainer = memo(({ children, variant, className = '', theme }) => (
+export type ClassValue = string | undefined | null | false;
+
+export interface CnFunction {
+  (...classes: ClassValue[]): string;
+}
+
+/**
+ * Utility function to concatenate class names.
+ */
+export const cn: CnFunction = (...classes) => classes.filter(Boolean).join(' ');
+
+interface IconContainerProps {
+  children: React.ReactNode;
+  variant: 'left' | 'center' | 'right';
+  className?: string;
+  theme?: 'light' | 'dark' | 'neutral';
+}
+const IconContainer = memo(({ children, variant, className = '', theme }: IconContainerProps) => (
   <motion.div
     variants={ICON_VARIANTS[variant]}
     className={cn(
@@ -54,9 +73,12 @@ const IconContainer = memo(({ children, variant, className = '', theme }) => (
 ));
 IconContainer.displayName = "IconContainer";
 
-const MultiIconDisplay = memo(({ icons, theme }) => {
+interface MultiIconDisplayProps {
+  icons: React.ReactNode[];
+  theme?: 'light' | 'dark' | 'neutral';
+}
+const MultiIconDisplay = memo(({ icons, theme }: MultiIconDisplayProps) => {
   if (!icons || icons.length < 3) return null;
-
   return (
     <div className="flex justify-center isolate relative">
       <IconContainer variant="left" className="left-2 top-1 z-10" theme={theme}>
@@ -73,7 +95,7 @@ const MultiIconDisplay = memo(({ icons, theme }) => {
 });
 MultiIconDisplay.displayName = "MultiIconDisplay";
 
-const Background = ({ theme }) => (
+const Background = () => (
   <div
     aria-hidden="true"
     className="absolute inset-0 opacity-0 group-hover:opacity-[0.02] transition-opacity duration-500"
@@ -99,7 +121,6 @@ export interface EmptyStateProps {
   theme?: 'light' | 'dark' | 'neutral';
   isIconAnimated?: boolean;
   className?: string;
-  [key: string]: any;
 }
 
 export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(({
@@ -125,7 +146,10 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(({
     lg: "p-12"
   };
 
-  const getVariantClasses = (variant, theme) => {
+  const getVariantClasses = (
+    variant: 'default' | 'subtle' | 'error',
+    theme: 'light' | 'dark' | 'neutral'
+  ): string => {
     const variants = {
       default: {
         light: "bg-transparent shadow-sm",
@@ -146,7 +170,11 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(({
     return variants[variant][theme];
   };
 
-  const getTextClasses = (type, size, theme) => {
+  const getTextClasses = (
+    type: 'title' | 'description',
+    size: 'sm' | 'default' | 'lg',
+    theme: 'light' | 'dark' | 'neutral'
+  ): string => {
     const sizes = {
       title: {
         sm: "text-base",
@@ -176,7 +204,10 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(({
     return cn(sizes[type][size], colors[type][theme], "font-semibold transition-colors duration-200");
   };
 
-  const getButtonClasses = (size, theme) => {
+  const getButtonClasses = (
+    size: 'sm' | 'default' | 'lg',
+    theme: 'light' | 'dark' | 'neutral'
+  ): string => {
     const sizeClasses = {
       sm: "text-xs px-3 py-1.5",
       default: "text-sm px-4 py-2",
@@ -214,7 +245,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(({
         whileHover={isIconAnimated ? "hover" : "animate"}
         {...props}
       >
-        <Background theme={theme} />
+  <Background />
         <div className="relative z-10 flex flex-col items-center">
           {icons && (
             <div className="mb-6">
