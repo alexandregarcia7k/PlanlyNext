@@ -2,7 +2,7 @@ import './globals.css';
 import React from 'react';
 import { GeistSans } from 'geist/font/sans';
 import { ThemeProvider } from 'next-themes';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from '@/components/ui/kibo-ui/landingpageui/sonner';
 
 
 const geistSans = GeistSans;

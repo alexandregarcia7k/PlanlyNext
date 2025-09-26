@@ -1,18 +1,18 @@
 "use client"
 
 import * as React from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/kibo-ui/landingpageui/button"
+import { Input } from "@/components/ui/kibo-ui/landingpageui/input"
 // ... textarea not required in this footer demo
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/kibo-ui/landingpageui/tooltip"
 import { Facebook, Instagram, Linkedin, Send, Twitter } from "lucide-react"
-import { ThemeSwitcher } from '@/components/ui/kibo-ui/theme-switcher'
-import { useFramerScroll } from "@/hooks/use-framer-scroll"
+import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher'
+import { useFramerScroll } from "@/hooks/scroll/use-framer-scroll"
 
 function Footerdemo() {
   const { scrollTo } = useFramerScroll();

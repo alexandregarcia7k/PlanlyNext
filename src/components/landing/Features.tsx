@@ -3,7 +3,7 @@ import { ChartLine, SquareKanban, AlarmClockCheck, NotebookTabs } from 'lucide-r
 import Image from 'next/image'
 import React from 'react'
 import { motion } from 'framer-motion'
-import { AnimatedElement, ScrollTiltImage, useScrollTilt } from '../ui/animations'
+import { AnimatedElement, ScrollTiltImage, useScrollTilt } from '../ui/kibo-ui/landingpageui/animations'
 
 export default function FeaturesSection() {
     const ref = React.useRef<HTMLDivElement | null>(null)

@@ -2,12 +2,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowRight} from 'lucide-react';
-import { Button } from '../ui/button';
+import { Button } from '../ui/kibo-ui/landingpageui/button';
 import Image from 'next/image';
-import { TextEffect } from '../ui/text-effect';
-import { AnimatedGroup } from '../ui/animated-group';
+import { TextEffect } from '../ui/kibo-ui/landingpageui/text-effect';
+import { AnimatedGroup } from '../ui/kibo-ui/landingpageui/animated-group';
 import { Header } from '../landing/Header';
-import { animationVariants } from '../ui/animations';
+import { animationVariants } from '../ui/kibo-ui/landingpageui/animations';
 
 export default function Hero() {
   return (

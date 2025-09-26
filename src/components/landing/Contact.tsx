@@ -1,9 +1,9 @@
-import { ContactCard } from "@/components/contact-card";
+import { ContactCard } from "@/components/ui/kibo-ui/landingpageui/contact-card";
 import { MailIcon } from 'lucide-react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/kibo-ui/landingpageui/input';
+import { Button } from '@/components/ui/kibo-ui/landingpageui/button';
+import { Label } from '@/components/ui/kibo-ui/landingpageui/label';
+import { Textarea } from '@/components/ui/kibo-ui/landingpageui/textarea';
 
 export default function DefaultDemo() {
 	return (

@@ -1,4 +1,4 @@
-import { Footerdemo } from "@/components/ui/footer-section";
+import { Footerdemo } from "@/components/ui/kibo-ui/landingpageui/footer-section";
 
 function Footer() {
   return (

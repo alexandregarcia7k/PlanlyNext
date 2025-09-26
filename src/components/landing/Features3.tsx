@@ -2,7 +2,7 @@
 
 import React, { memo, useCallback, useId, forwardRef, type JSX } from 'react';
 import { useTheme } from 'next-themes';
-import {cn, EmptyState } from "@/components/interactive-empty-state";
+import {cn, EmptyState } from "@/components/ui/kibo-ui/landingpageui/interactive-empty-state";
 import { motion } from 'framer-motion';
 import {
   Plus,

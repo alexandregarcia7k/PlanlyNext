@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/kibo-ui/landingpageui/card'
 import { ChartNoAxesCombined, MonitorCog } from 'lucide-react'
 
 export default function FeaturesSection() {

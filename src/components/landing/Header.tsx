@@ -2,11 +2,11 @@
 import Link from 'next/link'
 import { Logo } from './logo'
 import { Menu, X } from 'lucide-react'
-import { Button } from '../ui/button'
+import { Button } from '../ui/kibo-ui/landingpageui/button'
 import React from 'react'
 import { cn } from '@/lib/utils'
 import { animate } from 'framer-motion'
-import { ThemeSwitcher } from '../ui/kibo-ui/theme-switcher'
+import { ThemeSwitcher } from '../theme/ThemeSwitcher'
 
 const menuItems = [
   { name: 'Features', href: '#link' },
