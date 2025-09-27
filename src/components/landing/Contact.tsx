@@ -12,6 +12,7 @@ import { useActionState, useState } from 'react';
 
 interface ContactFormState {
 	success: boolean;
+	error?: string;
 }
 
 export default function DefaultDemo() {
@@ -33,7 +34,7 @@ export default function DefaultDemo() {
 			});
 		} else {
 			toast.error("Erro ao enviar", {
-				description: "Tente novamente em alguns instantes."
+				description: result.error || "Tente novamente em alguns instantes."
 			});
 		}
 
@@ -65,21 +66,28 @@ export default function DefaultDemo() {
 					]}
 				>
 					<form action={formAction} className="w-full space-y-4">
+						{/* Honeypot anti-spam */}
+						<input 
+							name="website" 
+							style={{ display: 'none' }} 
+							tabIndex={-1} 
+							autoComplete="off" 
+						/>
 						<div className="flex flex-col gap-2">
 							<Label htmlFor="name">Name</Label>
-							<Input id="name" name="name" type="text" placeholder="Seu nome" />
+							<Input id="name" name="name" type="text" placeholder="Seu nome" required />
 						</div>
 						<div className="flex flex-col gap-2">
 							<Label htmlFor="email">Email</Label>
-							<Input id="email" name="email" type="email" placeholder="nome@example.com" />
+							<Input id="email" name="email" type="email" placeholder="nome@example.com" required />
 						</div>
 						<div className="flex flex-col gap-2">
 							<Label htmlFor="subject">Assunto</Label>
-							<Input id="subject" name="subject" type="text" placeholder="Sobre o que você gostaria de falar?" />
+							<Input id="subject" name="subject" type="text" placeholder="Sobre o que você gostaria de falar?" required />
 						</div>
 						<div className="flex flex-col gap-2">
 							<Label htmlFor="message">Message</Label>
-							<Textarea id="message" name="message" placeholder="Escreva sua mensagem aqui..." />
+							<Textarea id="message" name="message" placeholder="Escreva sua mensagem aqui..." required />
 						</div>
 						<Button className="w-full" type="submit" disabled={isPending}>
 							{isPending ? (
