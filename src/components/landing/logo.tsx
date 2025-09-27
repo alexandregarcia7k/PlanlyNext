@@ -129,7 +129,6 @@ export function PlanlyMark({
   )
 }
 
-/* --- Seu "Logo" (ícone + palavra) --- */
 export function Logo({ className, uniColor, withShadow }: BaseProps) {
   return (
     <span className={cn('inline-flex items-center gap-2', className)}>
@@ -139,12 +138,10 @@ export function Logo({ className, uniColor, withShadow }: BaseProps) {
   )
 }
 
-/* --- Só o ícone (equivalente ao seu LogoIcon) --- */
 export function LogoIcon(props: BaseProps) {
   return <PlanlyMark {...props} />
 }
 
-/* --- Versão “stroke” (contornada) --- */
 export function LogoStroke({
   className,
   strokeWidth = 2,
@@ -154,7 +151,7 @@ export function LogoStroke({
       className={cn('h-7 w-auto', className)}
       uniColor
       withShadow={false}
-      variant="stroke"        // <- chave: agora é só contorno
+      variant="stroke"
       strokeWidth={strokeWidth}
     />
   )

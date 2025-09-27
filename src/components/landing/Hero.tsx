@@ -21,10 +21,8 @@ export default function Hero() {
           <div
             className="
               absolute left-0 top-0 -rotate-45 -translate-y-87.5 w-140 h-320 rounded-full
-              /* LIGHT: feixe roxo elegante (fade longo) */
               bg-[linear-gradient(115deg,rgba(67,25,97,0.16)_0%,rgba(160,120,220,0.10)_38%,rgba(67,25,97,0)_78%)]
               mix-blend-screen blur-3xl
-              /* DARK: exatamente o seu original */
               dark:bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]
               dark:mix-blend-normal dark:blur-none
             "

@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { Button } from "@/components/ui/kibo-ui/landingpageui/button"
+import Link from "next/link"
 import { Input } from "@/components/ui/kibo-ui/landingpageui/input"
 // ... textarea not required in this footer demo
 import {
@@ -24,14 +25,14 @@ function Footerdemo() {
       <div className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="relative">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight">Stay Connected</h2>
+            <h2 className="mb-4 text-3xl font-bold tracking-tight">Mantenha-se Conectado</h2>
             <p className="mb-6 text-muted-foreground">
-              Join our newsletter for the latest updates and exclusive offers.
+              Fique por dentro das novidades sobre o Planly.
             </p>
             <form className="relative">
               <Input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Digite seu email"
                 className="pr-12 backdrop-blur-sm"
               />
               <Button
@@ -40,33 +41,33 @@ function Footerdemo() {
                 className="absolute right-1 top-1 h-8 w-8 rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105"
               >
                 <Send className="h-4 w-4" />
-                <span className="sr-only">Subscribe</span>
+                <span className="sr-only">Inscrever-se</span>
               </Button>
             </form>
             <div className="absolute -right-4 top-0 h-24 w-24 rounded-full bg-primary/10 blur-2xl" />
           </div>
           <div>
-            <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
+            <h3 className="mb-4 text-lg font-semibold">Atalhos</h3>
             <nav className="space-y-2 text-sm">
               <button onClick={() => scrollTo('hero')} className="block transition-colors hover:text-primary cursor-pointer text-left">
                 Home
               </button>
               <button onClick={() => scrollTo('features')} className="block transition-colors hover:text-primary cursor-pointer text-left">
-                Features
+                Funcionalidades
               </button>
               <button onClick={() => scrollTo('parallax')} className="block transition-colors hover:text-primary cursor-pointer text-left">
-                About
+                Sobre
               </button>
               <button onClick={() => scrollTo('features3')} className="block transition-colors hover:text-primary cursor-pointer text-left">
-                Services
+                Serviços
               </button>
               <button onClick={() => scrollTo('contact')} className="block transition-colors hover:text-primary cursor-pointer text-left">
-                Contact
+                Contato
               </button>
             </nav>
           </div>
           <div>
-            <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
+            <h3 className="mb-4 text-lg font-semibold">Entre em Contato</h3>
             <address className="space-y-2 text-sm not-italic">
               <p></p>
               <p></p>
@@ -75,7 +76,7 @@ function Footerdemo() {
             </address>
           </div>
           <div className="relative">
-            <h3 className="mb-4 text-lg font-semibold">Follow Us</h3>
+            <h3 className="mb-4 text-lg font-semibold">Siga-nos</h3>
             <div className="mb-6 flex space-x-4">
               <TooltipProvider>
                 <Tooltip>
@@ -86,7 +87,7 @@ function Footerdemo() {
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Follow us on Facebook</p>
+                    <p>Nos siga no Facebook</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -99,7 +100,7 @@ function Footerdemo() {
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Follow us on Twitter</p>
+                    <p>Nos siga no Twitter</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -112,7 +113,7 @@ function Footerdemo() {
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Follow us on Instagram</p>
+                    <p>Nos siga no Instagram</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -125,7 +126,7 @@ function Footerdemo() {
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Connect with us on LinkedIn</p>
+                    <p>Nos siga no LinkedIn</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -137,17 +138,17 @@ function Footerdemo() {
         </div>
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t pt-8 text-center md:flex-row">
           <p className="text-sm text-muted-foreground">
-            © 2025 Planly. Todos os .
+            © 2025 Planly. Criado por <Link href="https://alexandregarcia.me" target="_blank" rel="who made it">Alexandre Garcia</Link>.
           </p>
           <nav className="flex gap-4 text-sm">
             <a href="#" className="transition-colors hover:text-primary">
-              Privacy Policy
+              Politica de Privacidade
             </a>
             <a href="#" className="transition-colors hover:text-primary">
-              Terms of Service
+              Termos de Serviço
             </a>
             <a href="#" className="transition-colors hover:text-primary">
-              Cookie Settings
+              Configurações de Cookies
             </a>
           </nav>
         </div>

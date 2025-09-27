@@ -76,7 +76,7 @@ export default function EmptyStateShowcase() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className={cn("text-base sm:text-lg max-w-3xl mx-auto", getSubtitleClass())}
           >
-            Optimized, accessible, and fully customizable empty state component with theme support.
+            Otimizado, acessível e repleto de funcionalidades para transformar sua rotina.
           </motion.p>
         </header>
 

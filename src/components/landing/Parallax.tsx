@@ -22,8 +22,6 @@ export default function DefaultDemo() {
     },[])
 
 
-	// use LogoIcon as the central / first slot; keep a stable order for icons to avoid
-	// hydration mismatch between server and client (don't use Math.random here)
 	const images = React.useMemo(() => {
 		const lucideIcons = [BookOpenText, Dumbbell, House, Briefcase, CalendarFold, HandCoins];
 		return [
@@ -32,7 +30,6 @@ export default function DefaultDemo() {
 		];
 	}, []);
 
-	// Title intersection observer: render animation only when section is in view
 	const titleRef = useRef(null);
 	const titleInView = useInView(titleRef, { once: true, amount: 0.45 });
 
@@ -43,15 +40,14 @@ export default function DefaultDemo() {
 				<div
 					aria-hidden="true"
 					className={cn(
-						// keep the spotlight visible above the page background but behind the content
+
 						'pointer-events-none absolute top-0 md:-top-1/2 left-1/2 -translate-x-1/2 rounded-full z-0',
 						'h-[100vmin] md:h-[120vmin] w-[100vmin] md:w-[120vmin]',
-						// stronger purple radial for light theme to match the Hero
 						'bg-[radial-gradient(ellipse_at_center,rgba(67,25,97,0.16)_0%,rgba(160,120,220,0.10)_38%,rgba(67,25,97,0)_78%)]',
 						'blur-[30px]',
 					)}
 				/>
-				{/* Title: only animate when section is in view */}
+
 
 				<div ref={titleRef} className='relative z-10 flex flex-col items-center justify-center gap-9 pt-16 text-center text-4xl font-bold'>
 					{titleInView ? (
@@ -64,7 +60,6 @@ export default function DefaultDemo() {
 							Sua Organização em um só Lugar
 						</TextEffect>
 					) : (
-						// keep same space before the animation triggers
 						<h1 className="text-center text-4xl font-bold opacity-0">Sua Organização em um só Lugar</h1>
 					)}
 				</div>
