@@ -16,21 +16,39 @@ import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher'
 import { useFramerScroll } from "@/hooks/scroll/use-framer-scroll"
 import { subscribeNewsletter } from '@/server/newsletter/actions'
 import { toast } from 'sonner'
-import { useActionState, useState } from 'react'
+import { useActionState, useState, useRef, useEffect } from 'react'
+
+// Constantes de configuração
+const SUCCESS_DISPLAY_DURATION_MS = 3000; // 3 segundos
 
 interface NewsletterFormState {
   success: boolean;
   error?: string;
 }
 
-function Footerdemo() {
+function FooterSection() {
   const { scrollTo } = useFramerScroll();
   const [isNewsletterPending, setIsNewsletterPending] = useState(false);
   const [isNewsletterSuccess, setIsNewsletterSuccess] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Cleanup timeout ao desmontar componente
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const [newsletterState, newsletterAction] = useActionState(async (prevState: NewsletterFormState | null, formData: FormData) => {
     setIsNewsletterPending(true);
     setIsNewsletterSuccess(false);
+    
+    // Limpar timeout anterior se existir
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
     
     const result = await subscribeNewsletter(formData);
     
@@ -38,7 +56,12 @@ function Footerdemo() {
 
     if (result.success) {
       setIsNewsletterSuccess(true);
-      setTimeout(() => setIsNewsletterSuccess(false), 3000);
+      // Armazenar referência do timeout para cleanup
+      timeoutRef.current = setTimeout(() => {
+        setIsNewsletterSuccess(false);
+        timeoutRef.current = null;
+      }, SUCCESS_DISPLAY_DURATION_MS);
+      
       toast.success("Inscrito na newsletter!", {
         description: "Você receberá nossas novidades em breve."
       });
@@ -133,8 +156,6 @@ function Footerdemo() {
                     <p>Nos siga no Facebook</p>
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button variant="outline" size="icon" className="rounded-full">
@@ -146,8 +167,6 @@ function Footerdemo() {
                     <p>Nos siga no Twitter</p>
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button variant="outline" size="icon" className="rounded-full">
@@ -159,8 +178,6 @@ function Footerdemo() {
                     <p>Nos siga no Instagram</p>
                   </TooltipContent>
                 </Tooltip>
-              </TooltipProvider>
-              <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <Button variant="outline" size="icon" className="rounded-full">
@@ -200,4 +217,4 @@ function Footerdemo() {
   )
 }
 
-export { Footerdemo }
+export { FooterSection }

@@ -4,8 +4,11 @@ import { subscribeNewsletter } from '@/server/newsletter/actions';
 import { Input } from '@/components/ui/kibo-ui/landingpageui/input';
 import { Button } from '@/components/ui/kibo-ui/landingpageui/button';
 import { toast } from 'sonner';
-import { useActionState, useState } from 'react';
+import { useActionState, useState, useRef, useEffect } from 'react';
 import { Loader2, Check } from 'lucide-react';
+
+// Constantes de configuração
+const SUCCESS_DISPLAY_DURATION_MS = 3000; // 3 segundos
 
 interface NewsletterFormState {
   success: boolean;
@@ -15,10 +18,25 @@ interface NewsletterFormState {
 export function NewsletterForm() {
   const [isPending, setIsPending] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Cleanup timeout ao desmontar componente
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const [state, formAction] = useActionState(async (prevState: NewsletterFormState | null, formData: FormData) => {
     setIsPending(true);
     setIsSuccess(false);
+    
+    // Limpar timeout anterior se existir
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
     
     const result = await subscribeNewsletter(formData);
     
@@ -26,7 +44,12 @@ export function NewsletterForm() {
 
     if (result.success) {
       setIsSuccess(true);
-      setTimeout(() => setIsSuccess(false), 3000);
+      // Armazenar referência do timeout para cleanup
+      timeoutRef.current = setTimeout(() => {
+        setIsSuccess(false);
+        timeoutRef.current = null;
+      }, SUCCESS_DISPLAY_DURATION_MS);
+      
       toast.success("Inscrito na newsletter!", {
         description: "Você receberá nossas novidades em breve."
       });

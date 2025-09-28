@@ -1,9 +1,9 @@
-import { Footerdemo } from "@/components/ui/kibo-ui/landingpageui/footer-section";
+import { FooterSection } from "@/components/ui/kibo-ui/landingpageui/footer-section";
 
 function Footer() {
   return (
     <div className="block">
-      <Footerdemo />
+      <FooterSection />
     </div>
   );
 }

@@ -64,26 +64,52 @@ export function validateEmailSecurity(email: string): { valid: boolean; error?: 
   return { valid: true };
 }
 
+// Constantes para detecção de spam
+const MAX_CONSECUTIVE_DIGITS = 5;
+const MIN_NAME_LENGTH = 2;
+const MAX_LINKS_ALLOWED = 2;
+const MIN_MESSAGE_LENGTH_FOR_CAPS_CHECK = 20;
+
+// Constantes para validação de email
+const MIN_EMAIL_LENGTH = 5;
+const MAX_EMAIL_LENGTH = 254;
+const MIN_DOMAIN_PARTS = 2;
+
 // Verificação adicional de padrões suspeitos
 export function detectSuspiciousPatterns(email: string, name: string, message: string): { suspicious: boolean; reason?: string } {
-  // Email com muitos números
-  if (/\d{5,}/.test(email)) {
+  // Validar inputs
+  if (!email || typeof email !== 'string') {
+    return { suspicious: false };
+  }
+  
+  if (!name || typeof name !== 'string') {
+    return { suspicious: false };
+  }
+  
+  if (!message || typeof message !== 'string') {
+    return { suspicious: false };
+  }
+  
+  // Email com muitos números consecutivos
+  const digitPattern = new RegExp(`\\d{${MAX_CONSECUTIVE_DIGITS},}`);
+  if (digitPattern.test(email)) {
     return { suspicious: true, reason: "Email com muitos números" };
   }
   
   // Nome muito curto ou suspeito
-  if (name.length < 2 || /^[a-z]+$/.test(name)) {
+  if (name.length < MIN_NAME_LENGTH || /^[a-z]+$/.test(name)) {
     return { suspicious: true, reason: "Nome suspeito" };
   }
   
   // Mensagem com muitos links
-  const linkCount = (message.match(/https?:\/\//g) || []).length;
-  if (linkCount > 2) {
+  const linkMatches = message.match(/https?:\/\//g);
+  const linkCount = linkMatches ? linkMatches.length : 0;
+  if (linkCount > MAX_LINKS_ALLOWED) {
     return { suspicious: true, reason: "Muitos links na mensagem" };
   }
   
   // Mensagem toda em maiúscula
-  if (message.length > 20 && message === message.toUpperCase()) {
+  if (message.length > MIN_MESSAGE_LENGTH_FOR_CAPS_CHECK && message === message.toUpperCase()) {
     return { suspicious: true, reason: "Mensagem em maiúscula (spam)" };
   }
   

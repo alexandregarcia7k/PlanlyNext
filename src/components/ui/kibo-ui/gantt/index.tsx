@@ -1201,7 +1201,7 @@ export const GanttProvider: FC<GanttProviderProps> = ({
         setScrollX(scrollElement.scrollLeft);
       }
     }, 100),
-    [],
+    [timelineData, setScrollX],
   );
 
   useEffect(() => {

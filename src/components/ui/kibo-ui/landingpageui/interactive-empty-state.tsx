@@ -150,24 +150,8 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(({
     variant: 'default' | 'subtle' | 'error',
     theme: 'light' | 'dark' | 'neutral'
   ): string => {
-    const variants = {
-      default: {
-        light: "bg-transparent shadow-sm",
-        dark: "bg-transparent shadow-sm",
-        neutral: "bg-transparent shadow-sm"
-      },
-      subtle: {
-        light: "bg-transparent shadow-sm",
-        dark: "bg-transparent shadow-sm",
-        neutral: "bg-transparent shadow-sm"
-      },
-      error: {
-        light: "bg-transparent shadow-sm",
-        dark: "bg-transparent shadow-sm",
-        neutral: "bg-transparent shadow-sm"
-      }
-    };
-    return variants[variant][theme];
+    // All variants and themes currently use the same classes
+    return "bg-transparent shadow-sm";
   };
 
   const getTextClasses = (

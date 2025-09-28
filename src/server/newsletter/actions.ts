@@ -3,10 +3,20 @@
 import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
 
-// Inicializar Supabase com fallback
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://lxinavyvatxalmsfiyye.supabase.co';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx4aW5hdnl2YXR4YWxtc2ZpeXllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc0NzU3ODcsImV4cCI6MjA3MzA1MTc4N30.XLaPiraoNsaUuGnBf0ouzSHTtPS2nBQ_tvq-Y6P2-zw';
+// Validar variáveis de ambiente obrigatórias
+function validateEnvironment() {
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
+  if (!supabaseUrl || !supabaseKey) {
+    throw new Error('Variáveis de ambiente do Supabase não configuradas');
+  }
+
+  return { supabaseUrl, supabaseKey };
+}
+
+// Inicializar Supabase com validação
+const { supabaseUrl, supabaseKey } = validateEnvironment();
 const supabase = createClient(supabaseUrl, supabaseKey, {
   db: {
     schema: 'api'
@@ -57,6 +67,7 @@ export async function subscribeNewsletter(formData: FormData) {
 
     return { success: true };
   } catch (error) {
+    console.error('Erro ao inscrever newsletter:', error);
     return {
       success: false,
       error: "Erro interno do servidor"
