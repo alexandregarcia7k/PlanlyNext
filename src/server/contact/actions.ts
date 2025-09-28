@@ -5,8 +5,6 @@ import { contactSchema } from "@/lib/validators/contact";
 import { validateEmailSecurity, detectSuspiciousPatterns } from "@/lib/validators/email-security";
 import { headers } from "next/headers";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 // Rate limiting simples (em produção, use Redis ou banco)
 const rateLimitMap = new Map<string, number>();
 
@@ -71,6 +69,15 @@ export async function sendContactEmail(formData: FormData) {
         data: { name, subject, message: message.substring(0, 100) }
       }));
     }
+
+    // Verificar se API key existe
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY não configurada');
+      return { success: false, error: "Configuração de email não encontrada" };
+    }
+
+    // Inicializar Resend com API key
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     // Enviar email
     await resend.emails.send({
