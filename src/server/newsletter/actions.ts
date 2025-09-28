@@ -44,9 +44,12 @@ export async function subscribeNewsletter(formData: FormData) {
         };
       }
 
+      // Log temporário para debug
+      console.error('Newsletter error:', error.code, error.message);
+      
       return {
         success: false,
-        error: "Erro ao inscrever na newsletter"
+        error: `Erro: ${error.message}`
       };
     }
 
