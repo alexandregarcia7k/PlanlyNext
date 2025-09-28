@@ -44,7 +44,6 @@ export async function subscribeNewsletter(formData: FormData) {
         };
       }
 
-      console.error('Erro Supabase:', error);
       return {
         success: false,
         error: "Erro ao inscrever na newsletter"
@@ -53,7 +52,6 @@ export async function subscribeNewsletter(formData: FormData) {
 
     return { success: true };
   } catch (error) {
-    console.error("Erro ao inscrever newsletter:", error);
     return {
       success: false,
       error: "Erro interno do servidor"

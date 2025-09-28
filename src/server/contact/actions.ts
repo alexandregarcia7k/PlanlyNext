@@ -58,21 +58,10 @@ export async function sendContactEmail(formData: FormData) {
 
     // Detecção de padrões suspeitos
     const suspiciousCheck = detectSuspiciousPatterns(email, name, message);
-    if (suspiciousCheck.suspicious) {
-      // Log para análise, mas não bloqueia (pode ser falso positivo)
-      console.log(JSON.stringify({
-        timestamp: new Date().toISOString(),
-        event: 'suspicious_pattern_detected',
-        ip: ip,
-        email: email,
-        reason: suspiciousCheck.reason,
-        data: { name, subject, message: message.substring(0, 100) }
-      }));
-    }
+    // Padrões suspeitos detectados mas não bloqueiam (podem ser falsos positivos)
 
     // Verificar se API key existe
     if (!process.env.RESEND_API_KEY) {
-      console.error('RESEND_API_KEY não configurada');
       return { success: false, error: "Configuração de email não encontrada" };
     }
 
@@ -101,7 +90,6 @@ export async function sendContactEmail(formData: FormData) {
 
     return { success: true };
   } catch (error) {
-    console.error("Erro ao enviar email:", error);
     return { success: false, error: "Erro interno do servidor" };
   }
 }
