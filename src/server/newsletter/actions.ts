@@ -1,6 +1,6 @@
 "use server";
 
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
 
 const newsletterSchema = z.object({
@@ -23,6 +23,18 @@ export async function subscribeNewsletter(formData: FormData) {
     }
 
     const { email } = validationResult.data;
+
+    // Verificar se variáveis existem
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      console.error('Variáveis do Supabase não configuradas');
+      return { success: false, error: "Configuração não encontrada" };
+    }
+
+    // Inicializar Supabase
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
 
     // Inserir no Supabase
     const { error } = await supabase
