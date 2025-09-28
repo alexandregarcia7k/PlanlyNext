@@ -1,6 +1,6 @@
 "use client"
 
-import React, { memo, useCallback, useId, forwardRef, type JSX } from 'react';
+import React, { memo, useId, forwardRef, type JSX } from 'react';
 import { useTheme } from 'next-themes';
 import {cn, EmptyState } from "@/components/ui/kibo-ui/landingpageui/interactive-empty-state";
 import { motion } from 'framer-motion';
@@ -22,18 +22,14 @@ export default function EmptyStateShowcase() {
 
   const [mounted, setMounted] = React.useState(false);
   const { resolvedTheme } = useTheme();
-  const handleAction: HandleAction = useCallback((section: string) => {
-    console.log(`Action triggered for: ${section}`);
-  }, []);
+
   React.useEffect(() => setMounted(true), []);
   if (!mounted) return null;
 
   // Evita hydration mismatch usando tema padrão
   const theme = resolvedTheme === 'dark' ? 'dark' : resolvedTheme === 'neutral' ? 'neutral' : 'light';
 
-  interface HandleAction {
-    (section: string): void;
-  }
+
 
   interface MotionDivProps {
     delay: number;

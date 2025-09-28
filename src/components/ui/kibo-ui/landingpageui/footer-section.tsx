@@ -11,12 +11,45 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/kibo-ui/landingpageui/tooltip"
-import { Facebook, Instagram, Linkedin, Send, Twitter } from "lucide-react"
+import { Facebook, Instagram, Linkedin, Send, Twitter, Loader2, Check } from "lucide-react"
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher'
 import { useFramerScroll } from "@/hooks/scroll/use-framer-scroll"
+import { subscribeNewsletter } from '@/server/newsletter/actions'
+import { toast } from 'sonner'
+import { useActionState, useState } from 'react'
+
+interface NewsletterFormState {
+  success: boolean;
+  error?: string;
+}
 
 function Footerdemo() {
   const { scrollTo } = useFramerScroll();
+  const [isNewsletterPending, setIsNewsletterPending] = useState(false);
+  const [isNewsletterSuccess, setIsNewsletterSuccess] = useState(false);
+
+  const [newsletterState, newsletterAction] = useActionState(async (prevState: NewsletterFormState | null, formData: FormData) => {
+    setIsNewsletterPending(true);
+    setIsNewsletterSuccess(false);
+    
+    const result = await subscribeNewsletter(formData);
+    
+    setIsNewsletterPending(false);
+
+    if (result.success) {
+      setIsNewsletterSuccess(true);
+      setTimeout(() => setIsNewsletterSuccess(false), 3000);
+      toast.success("Inscrito na newsletter!", {
+        description: "Você receberá nossas novidades em breve."
+      });
+    } else {
+      toast.error("Erro ao inscrever", {
+        description: result.error || "Tente novamente."
+      });
+    }
+
+    return result;
+  }, null);
 
 
 
@@ -29,18 +62,28 @@ function Footerdemo() {
             <p className="mb-6 text-muted-foreground">
               Fique por dentro das novidades sobre o Planly.
             </p>
-            <form className="relative">
+            <form action={newsletterAction} className="relative">
               <Input
+                name="email"
                 type="email"
                 placeholder="Digite seu email"
                 className="pr-12 backdrop-blur-sm"
+                required
+                disabled={isNewsletterPending}
               />
               <Button
                 type="submit"
                 size="icon"
                 className="absolute right-1 top-1 h-8 w-8 rounded-full bg-primary text-primary-foreground transition-transform hover:scale-105"
+                disabled={isNewsletterPending || isNewsletterSuccess}
               >
-                <Send className="h-4 w-4" />
+                {isNewsletterPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : isNewsletterSuccess ? (
+                  <Check className="h-4 w-4" />
+                ) : (
+                  <Send className="h-4 w-4" />
+                )}
                 <span className="sr-only">Inscrever-se</span>
               </Button>
             </form>
