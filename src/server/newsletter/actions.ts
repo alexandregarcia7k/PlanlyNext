@@ -9,7 +9,7 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUz
 
 const supabase = createClient(supabaseUrl, supabaseKey, {
   db: {
-    schema: 'public'
+    schema: 'api'
   }
 });
 
@@ -34,9 +34,9 @@ export async function subscribeNewsletter(formData: FormData) {
 
     const { email } = validationResult.data;
 
-    // Inserir no Supabase
+    // Inserir usando cliente Supabase no schema api
     const { error } = await supabase
-      .schema('public')
+      .schema('api')
       .from('newsletter_subscribers')
       .insert([{ email }]);
 
@@ -49,12 +49,9 @@ export async function subscribeNewsletter(formData: FormData) {
         };
       }
 
-      // Log temporário para debug
-      console.error('Newsletter error:', error.code, error.message);
-      
       return {
         success: false,
-        error: `Erro: ${error.message}`
+        error: "Erro ao inscrever na newsletter"
       };
     }
 
