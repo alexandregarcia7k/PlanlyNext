@@ -3,25 +3,21 @@
 import { createClient } from '@supabase/supabase-js';
 import { z } from 'zod';
 
-// Validar variáveis de ambiente obrigatórias
-function validateEnvironment() {
+// Função para criar cliente Supabase com validação lazy
+function createSupabaseClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
+  
   if (!supabaseUrl || !supabaseKey) {
     throw new Error('Variáveis de ambiente do Supabase não configuradas');
   }
-
-  return { supabaseUrl, supabaseKey };
+  
+  return createClient(supabaseUrl, supabaseKey, {
+    db: {
+      schema: 'api'
+    }
+  });
 }
-
-// Inicializar Supabase com validação
-const { supabaseUrl, supabaseKey } = validateEnvironment();
-const supabase = createClient(supabaseUrl, supabaseKey, {
-  db: {
-    schema: 'api'
-  }
-});
 
 const newsletterSchema = z.object({
   email: z.string().email("Email inválido").toLowerCase(),
@@ -44,7 +40,8 @@ export async function subscribeNewsletter(formData: FormData) {
 
     const { email } = validationResult.data;
 
-    // Inserir usando cliente Supabase no schema api
+    // Criar cliente e inserir no schema api
+    const supabase = createSupabaseClient();
     const { error } = await supabase
       .schema('api')
       .from('newsletter_subscribers')
