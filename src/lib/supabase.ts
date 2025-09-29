@@ -1,20 +1,29 @@
 import { createClient } from '@supabase/supabase-js';
+import type { SupabaseClient } from '@supabase/supabase-js';
 
-// Função para validar e obter cliente Supabase
-function createSupabaseClient() {
+// Cliente lazy - criado apenas quando necessário
+let supabaseClient: SupabaseClient | null = null;
+
+// Função para obter cliente Supabase com lazy initialization
+function getSupabaseClient() {
+  if (supabaseClient) {
+    return supabaseClient;
+  }
+
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   
   if (!supabaseUrl) {
     throw new Error('NEXT_PUBLIC_SUPABASE_URL não está configurada');
   }
   
   if (!supabaseKey) {
-    throw new Error('NEXT_PUBLIC_SUPABASE_ANON_KEY não está configurada');
+    throw new Error('NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY não está configurada');
   }
   
-  return createClient(supabaseUrl, supabaseKey);
+  supabaseClient = createClient(supabaseUrl, supabaseKey);
+  return supabaseClient;
 }
 
-// Exportar cliente com validação lazy
-export const supabase = createSupabaseClient();
+// Exportar getter ao invés de instância direta
+export const supabase = getSupabaseClient();

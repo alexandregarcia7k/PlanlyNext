@@ -1,6 +1,6 @@
 "use client"
 
-import React, { memo, useId, forwardRef, type JSX } from 'react';
+import React, { type JSX } from 'react';
 import { useTheme } from 'next-themes';
 import {cn, EmptyState } from "@/components/ui/kibo-ui/landingpageui/interactive-empty-state";
 import { motion } from 'framer-motion';

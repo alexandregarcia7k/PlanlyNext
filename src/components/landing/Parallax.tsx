@@ -10,16 +10,23 @@ import { TextEffect } from '../ui/kibo-ui/landingpageui/text-effect';
 
 export default function DefaultDemo() {
 
-	React.useEffect( () => {
-        const lenis = new Lenis()
+	React.useEffect(() => {
+        const lenis = new Lenis();
+        let animationId: number;
 
         function raf(time: number) {
-            lenis.raf(time)
-            requestAnimationFrame(raf)
+            lenis.raf(time);
+            animationId = requestAnimationFrame(raf);
         }
 
-        requestAnimationFrame(raf)
-    },[])
+        animationId = requestAnimationFrame(raf);
+
+        // Cleanup para evitar memory leaks
+        return () => {
+            cancelAnimationFrame(animationId);
+            lenis.destroy();
+        };
+    }, []);
 
 
 	const images = React.useMemo(() => {

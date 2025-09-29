@@ -1,6 +1,6 @@
 "use client";
 
-import { subscribeNewsletter } from '@/server/newsletter/actions';
+import { subscribeNewsletter } from '@/server/actions';
 import { Input } from '@/components/ui/kibo-ui/landingpageui/input';
 import { Button } from '@/components/ui/kibo-ui/landingpageui/button';
 import { toast } from 'sonner';
@@ -29,7 +29,7 @@ export function NewsletterForm() {
     };
   }, []);
 
-  const [state, formAction] = useActionState(async (prevState: NewsletterFormState | null, formData: FormData) => {
+  const [_state, formAction] = useActionState(async (prevState: NewsletterFormState | null, formData: FormData) => {
     setIsPending(true);
     setIsSuccess(false);
     

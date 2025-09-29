@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/kibo-ui/landingpageui/input';
 import { Button } from '@/components/ui/kibo-ui/landingpageui/button';
 import { Label } from '@/components/ui/kibo-ui/landingpageui/label';
 import { Textarea } from '@/components/ui/kibo-ui/landingpageui/textarea';
-import { sendContactEmail } from "@/server/contact/actions";
+import { sendContactEmail } from "@/server/actions";
 import { toast } from 'sonner';
 import { useActionState, useState } from 'react';
 

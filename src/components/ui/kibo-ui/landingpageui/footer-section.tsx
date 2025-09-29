@@ -14,7 +14,7 @@ import {
 import { Facebook, Instagram, Linkedin, Send, Twitter, Loader2, Check } from "lucide-react"
 import { ThemeSwitcher } from '@/components/theme/ThemeSwitcher'
 import { useFramerScroll } from "@/hooks/scroll/use-framer-scroll"
-import { subscribeNewsletter } from '@/server/newsletter/actions'
+import { subscribeNewsletter } from '@/server/actions'
 import { toast } from 'sonner'
 import { useActionState, useState, useRef, useEffect } from 'react'
 
@@ -44,34 +44,48 @@ function FooterSection() {
   const [newsletterState, newsletterAction] = useActionState(async (prevState: NewsletterFormState | null, formData: FormData) => {
     setIsNewsletterPending(true);
     setIsNewsletterSuccess(false);
-    
+
     // Limpar timeout anterior se existir
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
-    
-    const result = await subscribeNewsletter(formData);
-    
-    setIsNewsletterPending(false);
 
-    if (result.success) {
-      setIsNewsletterSuccess(true);
-      // Armazenar referência do timeout para cleanup
-      timeoutRef.current = setTimeout(() => {
-        setIsNewsletterSuccess(false);
-        timeoutRef.current = null;
-      }, SUCCESS_DISPLAY_DURATION_MS);
-      
-      toast.success("Inscrito na newsletter!", {
-        description: "Você receberá nossas novidades em breve."
+    try {
+      const result = await subscribeNewsletter(formData);
+
+      setIsNewsletterPending(false);
+
+      if (result.success) {
+        setIsNewsletterSuccess(true);
+        // Armazenar referência do timeout para cleanup
+        timeoutRef.current = setTimeout(() => {
+          setIsNewsletterSuccess(false);
+          timeoutRef.current = null;
+        }, SUCCESS_DISPLAY_DURATION_MS);
+
+        toast.success("Inscrito na newsletter!", {
+          description: "Você receberá nossas novidades em breve."
+        });
+      } else {
+        toast.error("Erro ao inscrever", {
+          description: result.error || "Tente novamente."
+        });
+      }
+
+      return result;
+    } catch (error) {
+      // Tratar erros de rede ou exceções inesperadas
+      setIsNewsletterPending(false);
+
+      toast.error("Erro de conexão", {
+        description: "Verifique sua internet e tente novamente."
       });
-    } else {
-      toast.error("Erro ao inscrever", {
-        description: result.error || "Tente novamente."
-      });
+
+      return {
+        success: false,
+        error: "Erro de conexão"
+      };
     }
-
-    return result;
   }, null);
 
 

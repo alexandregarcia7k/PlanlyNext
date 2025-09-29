@@ -5,14 +5,14 @@ const ALLOWED_DOMAINS = [
   'outlook.com', 'hotmail.com', 'live.com', 'msn.com',
   'yahoo.com', 'yahoo.com.br',
   'icloud.com', 'me.com', 'mac.com',
-  
+
   // Provedores brasileiros
   'uol.com.br', 'bol.com.br', 'terra.com.br',
   'ig.com.br', 'r7.com', 'globo.com',
-  
+
   // Empresariais comuns
   'company.com', 'corp.com', 'enterprise.com',
-  
+
   // Educacionais
   'edu', 'edu.br', 'ac.uk', 'edu.au'
 ];
@@ -23,7 +23,7 @@ const BLACKLISTED_DOMAINS = [
   '10minutemail.com', 'tempmail.org', 'guerrillamail.com',
   'mailinator.com', 'yopmail.com', 'temp-mail.org',
   'throwaway.email', 'maildrop.cc', 'sharklasers.com',
-  
+
   // Domínios suspeitos
   'example.com', 'test.com', 'localhost',
   'spam.com', 'fake.com', 'invalid.com'
@@ -38,29 +38,29 @@ const BLACKLISTED_EMAILS = [
 export function validateEmailSecurity(email: string): { valid: boolean; error?: string } {
   const emailLower = email.toLowerCase();
   const domain = emailLower.split('@')[1];
-  
+
   // Verificar emails específicos bloqueados
   if (BLACKLISTED_EMAILS.includes(emailLower)) {
     return { valid: false, error: "Este email não é permitido" };
   }
-  
+
   // Verificar domínios bloqueados
   if (BLACKLISTED_DOMAINS.some(blocked => domain.includes(blocked))) {
     return { valid: false, error: "Emails temporários não são permitidos" };
   }
-  
+
   // Verificar se é domínio confiável
   const isAllowed = ALLOWED_DOMAINS.some(allowed => {
     return domain === allowed || domain.endsWith('.' + allowed);
   });
-  
+
   if (!isAllowed) {
-    return { 
-      valid: false, 
-      error: "Use um email de provedor confiável (Gmail, Outlook, Yahoo, etc.)" 
+    return {
+      valid: false,
+      error: "Use um email de provedor confiável (Gmail, Outlook, Yahoo, etc.)"
     };
   }
-  
+
   return { valid: true };
 }
 
@@ -70,48 +70,43 @@ const MIN_NAME_LENGTH = 2;
 const MAX_LINKS_ALLOWED = 2;
 const MIN_MESSAGE_LENGTH_FOR_CAPS_CHECK = 20;
 
-// Constantes para validação de email
-const MIN_EMAIL_LENGTH = 5;
-const MAX_EMAIL_LENGTH = 254;
-const MIN_DOMAIN_PARTS = 2;
-
 // Verificação adicional de padrões suspeitos
 export function detectSuspiciousPatterns(email: string, name: string, message: string): { suspicious: boolean; reason?: string } {
   // Validar inputs
   if (!email || typeof email !== 'string') {
     return { suspicious: false };
   }
-  
+
   if (!name || typeof name !== 'string') {
     return { suspicious: false };
   }
-  
+
   if (!message || typeof message !== 'string') {
     return { suspicious: false };
   }
-  
+
   // Email com muitos números consecutivos
   const digitPattern = new RegExp(`\\d{${MAX_CONSECUTIVE_DIGITS},}`);
   if (digitPattern.test(email)) {
     return { suspicious: true, reason: "Email com muitos números" };
   }
-  
+
   // Nome muito curto ou suspeito
   if (name.length < MIN_NAME_LENGTH || /^[a-z]+$/.test(name)) {
     return { suspicious: true, reason: "Nome suspeito" };
   }
-  
+
   // Mensagem com muitos links
   const linkMatches = message.match(/https?:\/\//g);
   const linkCount = linkMatches ? linkMatches.length : 0;
   if (linkCount > MAX_LINKS_ALLOWED) {
     return { suspicious: true, reason: "Muitos links na mensagem" };
   }
-  
+
   // Mensagem toda em maiúscula
   if (message.length > MIN_MESSAGE_LENGTH_FOR_CAPS_CHECK && message === message.toUpperCase()) {
     return { suspicious: true, reason: "Mensagem em maiúscula (spam)" };
   }
-  
+
   return { suspicious: false };
 }

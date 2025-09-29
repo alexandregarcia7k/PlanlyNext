@@ -20,10 +20,22 @@ export const Header = () => {
   const [isScrolled, setIsScrolled] = React.useState(false)
 
   React.useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    let timeoutId: NodeJS.Timeout;
+    
+    const onScroll = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setIsScrolled(window.scrollY > 50);
+      }, 16); // ~60fps
+    };
+    
+    window.addEventListener('scroll', onScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      clearTimeout(timeoutId);
+    };
+  }, []);
 
   return (
     <header>

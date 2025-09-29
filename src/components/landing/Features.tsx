@@ -38,7 +38,7 @@ export default function FeaturesSection() {
                         <div className="rotate-x-6 -skew-2">
                             <motion.div
                                 ref={ref}
-                                className="aspect-88/36 relative will-change-transform"
+                                className="aspect-[4/3] sm:aspect-[16/9] md:aspect-[88/36] relative will-change-transform"
                                 style={{
                                     rotateY,
                                     rotateX,
@@ -48,17 +48,19 @@ export default function FeaturesSection() {
                             >
                                 <Image
                                     src="/assets/notesdark.png"
-                                    className="hidden dark:block"
-                                    alt="payments illustration dark"
+                                    className="hidden dark:block object-cover"
+                                    alt="notes interface dark mode"
                                     width={2797}
                                     height={1137}
+                                    priority
                                 />
                                 <Image
                                     src="/assets/noteslight.png"
-                                    className="dark:hidden"
-                                    alt="payments illustration light"
+                                    className="dark:hidden object-cover"
+                                    alt="notes interface light mode"
                                     width={2797}
                                     height={1137}
+                                    priority
                                 />
                             </motion.div>
                         </div>

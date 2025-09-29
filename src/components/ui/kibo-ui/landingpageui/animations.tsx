@@ -215,22 +215,7 @@ export const ScrollTiltImage: React.FC<ScrollTiltImageProps> = ({
       viewport={{ once: true, margin: "-100px" }}
       variants={entranceVariant}
     >
-      {/* Máscara dinâmica para features */}
-      {variant === 'features' && (
-        <motion.div
-          className="absolute inset-0 z-20 pointer-events-none"
-          style={{
-            background: `
-              radial-gradient(ellipse 120% 80% at 50% 50%, transparent 30%, transparent 50%, hsl(var(--background)) 85%),
-              linear-gradient(to bottom, transparent 0%, transparent 60%, hsl(var(--background)) 90%),
-              linear-gradient(to right, transparent 0%, transparent 60%, hsl(var(--background)) 90%),
-              linear-gradient(to left, transparent 0%, transparent 60%, hsl(var(--background)) 90%),
-              linear-gradient(to top, transparent 0%, transparent 60%, hsl(var(--background)) 90%)
-            `,
-            opacity: maskOpacity
-          }}
-        />
-      )}
+
       {children}
     </motion.div>
   );
