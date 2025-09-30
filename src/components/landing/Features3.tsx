@@ -72,7 +72,7 @@ export default function EmptyStateShowcase() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className={cn("text-base sm:text-lg max-w-3xl mx-auto", getSubtitleClass())}
           >
-            Otimizado, acessível e repleto de funcionalidades para transformar sua rotina.
+           Teste nossas funcionalidades na versão demo! e faça sua sugestão de melhoria.
           </motion.p>
         </header>
 
@@ -83,13 +83,19 @@ export default function EmptyStateShowcase() {
               title="Organização Visual"
               description="Gerencie tarefas, projetos e ideias com quadros Kanban, listas e categorias personalizadas."
               icons={[<SquareKanban key="k1" className="h-6 w-6" />, <FolderOpen key="k2" className="h-6 w-6" />, <ListChecks key="k3" className="h-6 w-6" />]}
-              action={{ label: "Explorar Kanban", icon: <Plus className="h-4 w-4" />, onClick: () => toast.error("Não disponível.", {
-                description: "Esse recurso ainda não está disponível.",
-                action: {
-                  label: "OK",
-                  onClick: () => { /* Ação adicional se necessário */ }
-                }
-              }) }}
+              action={{
+                label: "Explorar Kanban",
+                icon: <Plus className="h-4 w-4" />,
+                onClick: () => toast(
+                  "Isso encaminhará para nossa versão demo",
+                  {
+                    action: {
+                      label: "Testar",
+                      onClick: () => window.open("https://planly-demo-frontend.vercel.app", "_blank", "noopener,noreferrer")
+                    }
+                  }
+                )
+              }}
             />
           )}
           {motionDiv(0.3,
@@ -98,13 +104,19 @@ export default function EmptyStateShowcase() {
               title="Foco e Eficiência"
               description="Utilize Timer Pomodoro, calculadoras e ferramentas de análise para aumentar sua produtividade e manter o foco."
               icons={[<AlarmClockCheck key="t1" className="h-6 w-6" />, <Calculator key="t2" className="h-6 w-6" />, <TrendingUp key="t3" className="h-6 w-6" />]}
-              action={{ label: "Iniciar Pomodoro", icon: <Plus className="h-4 w-4" />, onClick: () => toast.error("Não disponível.", {
-                description: "Esse recurso ainda não está disponível.",
-                action: {
-                  label: "OK",
-                  onClick: () => { /* Ação adicional se necessário */ }
-                }
-              }) }}
+              action={{
+                label: "Iniciar Pomodoro",
+                icon: <Plus className="h-4 w-4" />,
+                onClick: () => toast(
+                  "Isso encaminhará para nossa versão demo",
+                  {
+                    action: {
+                      label: "Testar",
+                      onClick: () => window.open("https://planly-demo-frontend.vercel.app", "_blank", "noopener,noreferrer")
+                    }
+                  }
+                )
+              }}
             />
           )}
           {motionDiv(0.4,
@@ -113,13 +125,19 @@ export default function EmptyStateShowcase() {
               title="Anotações Inteligentes"
               description="Crie, edite e compartilhe notas, links e insights de forma rápida e integrada ao seu fluxo de trabalho."
               icons={[<NotebookTabs key="n1" className="h-6 w-6" />, <BookOpen key="n2" className="h-6 w-6" />, <MousePointerClick key="n3" className="h-6 w-6" />]}
-              action={{ label: "Nova Nota", icon: <Plus className="h-4 w-4" />, onClick: () => toast.error("Não disponível.", {
-                description: "Esse recurso ainda não está disponível.",
-                action: {
-                  label: "OK",
-                  onClick: () => { /* Ação adicional se necessário */ }
-                }
-              }) }}
+              action={{
+                label: "Nova Nota",
+                icon: <Plus className="h-4 w-4" />,
+                onClick: () => toast(
+                  "Isso encaminhará para nossa versão demo",
+                  {
+                    action: {
+                      label: "Testar",
+                      onClick: () => window.open("https://planly-demo-frontend.vercel.app", "_blank", "noopener,noreferrer")
+                    }
+                  }
+                )
+              }}
             />
           )}
         </main>

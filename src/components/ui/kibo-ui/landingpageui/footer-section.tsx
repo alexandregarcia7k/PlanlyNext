@@ -28,6 +28,7 @@ interface NewsletterFormState {
 
 function FooterSection() {
   const { scrollTo } = useFramerScroll();
+  const { scrollTo: scrollToContact } = useFramerScroll(-180);
   const [isNewsletterPending, setIsNewsletterPending] = useState(false);
   const [isNewsletterSuccess, setIsNewsletterSuccess] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -91,7 +92,7 @@ function FooterSection() {
 
 
   return (
-    <footer className="relative border-t bg-background text-foreground transition-colors duration-300">
+    <footer id="footer" className="relative border-t bg-background text-foreground transition-colors duration-300">
       <div className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="relative">
@@ -136,12 +137,12 @@ function FooterSection() {
                 Funcionalidades
               </button>
               <button onClick={() => scrollTo('parallax')} className="block transition-colors hover:text-primary cursor-pointer text-left">
-                Sobre
+                Soluções
               </button>
               <button onClick={() => scrollTo('features3')} className="block transition-colors hover:text-primary cursor-pointer text-left">
                 Serviços
               </button>
-              <button onClick={() => scrollTo('contact')} className="block transition-colors hover:text-primary cursor-pointer text-left">
+              <button onClick={() => scrollToContact('contact')} className="block transition-colors hover:text-primary cursor-pointer text-left">
                 Contato
               </button>
             </nav>

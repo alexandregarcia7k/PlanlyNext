@@ -7,48 +7,46 @@ import React from 'react'
 import { cn } from '@/lib/utils'
 import { animate } from 'framer-motion'
 import { ThemeSwitcher } from '../theme/ThemeSwitcher'
+import { useFramerScroll } from '@/hooks/scroll/use-framer-scroll';
 
 const menuItems = [
-  { name: 'Features', href: '#link' },
-  { name: 'Soluções', href: '#link' },
-  { name: 'Plano', href: '#link' },
-  { name: 'Sobre', href: '#link' },
+  { name: 'Features', href: '#features', scrollId: 'features' },
+  { name: 'Soluções', href: '#parallax', scrollId: 'parallax' },
+  { name: 'Contato', href: '#contact', scrollId: 'contact' },
+  { name: 'Newsletter', href: '#footer', scrollId: 'footer' },
 ]
 
 export const Header = () => {
+  // Offset negativo maior para centralizar mais acima (ex: -180)
+  const { scrollTo } = useFramerScroll(-180);
   const [menuState, SetMenuState] = React.useState(false)
   const [isScrolled, setIsScrolled] = React.useState(false)
 
   React.useEffect(() => {
-    let timeoutId: NodeJS.Timeout;
-    
     const onScroll = () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        setIsScrolled(window.scrollY > 50);
-      }, 16); // ~60fps
+      const scrollY = (window as Window & { lenis?: { scroll: number } }).lenis?.scroll || window.scrollY;
+      setIsScrolled(scrollY > 50);
     };
-    
+
     window.addEventListener('scroll', onScroll, { passive: true });
-    
+
     return () => {
       window.removeEventListener('scroll', onScroll);
-      clearTimeout(timeoutId);
     };
   }, []);
 
   return (
     <header>
-
+      {/* 1) nav ocupa a largura inteira, sem padding que “puxa” pro lado */}
   <nav data-state={menuState && 'active'} className="fixed inset-x-0 z-50">
-
+        {/* 2) container centralizado com paddings simétricos em todos breakpoints */}
         <div
           data-shrunk={isScrolled}
           className={cn(
             'mx-auto mt-2 max-w-6xl px-4 sm:px-6 lg:px-8 transition-all duration-300',
             isScrolled && 'max-w-4xl rounded-2xl border bg-background/50 backdrop-blur-lg'
           )}
-
+          // safe-area iOS
           style={{
             paddingLeft: 'max(env(safe-area-inset-left), 1rem)',
             paddingRight: 'max(env(safe-area-inset-right), 1rem)',
@@ -63,14 +61,7 @@ export const Header = () => {
                 className="flex items-center space-x-2 cursor-pointer"
                 onClick={e => {
                   e.preventDefault();
-                  const el = document.getElementById('hero');
-                  if (el) {
-                    animate(window.scrollY, el.offsetTop, {
-                      duration: 1,
-                      ease: [0.22, 1, 0.36, 1],
-                      onUpdate: v => window.scrollTo({ top: v })
-                    });
-                  }
+                  scrollTo('hero');
                 }}
               >
                 <Logo />
@@ -86,7 +77,7 @@ export const Header = () => {
               </button>
             </div>
 
-
+            {/* menu central (desktop), centralizado sem absolute para não cobrir o logo */}
             <div className="hidden lg:flex flex-1 items-center justify-center">
               <ul className="flex gap-8 text-sm">
                 {menuItems.map((item) => (
@@ -94,6 +85,10 @@ export const Header = () => {
                     <Link
                       href={item.href}
                       className="block text-sm text-muted-foreground duration-150 hover:text-accent-foreground"
+                      onClick={e => {
+                        e.preventDefault();
+                        scrollTo(item.scrollId);
+                      }}
                     >
                       {item.name}
                     </Link>
@@ -102,6 +97,7 @@ export const Header = () => {
               </ul>
             </div>
 
+            {/* 3) MOBILE PANEL: centralizado e com largura limitada */}
             <div
               className="
                 bg-background
@@ -123,6 +119,10 @@ export const Header = () => {
                       <Link
                         href={item.href}
                         className="block duration-150 text-muted-foreground hover:text-accent-foreground"
+                        onClick={e => {
+                          e.preventDefault();
+                          scrollTo(item.scrollId);
+                        }}
                       >
                         {item.name}
                       </Link>
@@ -145,7 +145,7 @@ export const Header = () => {
                 </Button>
 
                 <Button asChild size="sm" className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
-                  <Link href="#"><span>Get Started</span></Link>
+                  <Link href="https://planly-demo-frontend.vercel.app" target='_blank' rel='noopener noreferrer'><span>Testar Demo</span></Link>
                 </Button>
               </div>
             </div>

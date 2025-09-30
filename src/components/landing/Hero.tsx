@@ -8,8 +8,10 @@ import { TextEffect } from '../ui/kibo-ui/landingpageui/text-effect';
 import { AnimatedGroup } from '../ui/kibo-ui/landingpageui/animated-group';
 import { Header } from '../landing/Header';
 import { animationVariants } from '../ui/kibo-ui/landingpageui/animations';
+import { useFramerScroll } from '@/hooks/scroll/use-framer-scroll';
 
 export default function Hero() {
+  const { scrollTo } = useFramerScroll();
   return (
     <>
       <Header />
@@ -76,13 +78,16 @@ export default function Hero() {
               }}
               className="mask-b-from-35% mask-b-to-90% absolute inset-0 top-56 -z-20 lg:top-32"
             >
-              <Image
-                src="https://ik.imagekit.io/lrigu76hy/tailark/night-background.jpg?updatedAt=1745733451120"
+              {/* <Image
+                src=""
                 alt="background"
                 className="hidden size-full dark:block"
                 width="3276"
                 height="4095"
-              />
+              /> */}
+              {/* Empty fragment as children to satisfy required prop */}
+              <>
+              </>
             </AnimatedGroup>
 
             <div
@@ -94,8 +99,12 @@ export default function Hero() {
               <div className="text-center sm:mx-auto lg:mr-auto lg:mt-0">
                 <AnimatedGroup variants={animationVariants.heroText}>
                   <Link
-                    href="#link"
+                    href="#features"
                     className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 pl-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
+                    onClick={e => {
+                      e.preventDefault();
+                      scrollTo('features');
+                    }}
                   >
                     <span className="text-foreground text-sm">
                       Confira nossas funcionalidades
@@ -165,7 +174,7 @@ export default function Hero() {
                     variant="ghost"
                     className="h-10.5 rounded-xl px-5"
                   >
-                    <Link href="#link">
+                    <Link href="https://planly-demo-frontend.vercel.app" target='_blank' rel='noopener noreferrer'>
                       <span className="text-nowrap">Versão demo</span>
                     </Link>
                   </Button>

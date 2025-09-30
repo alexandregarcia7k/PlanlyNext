@@ -15,8 +15,8 @@ export default function LandingPage() {
         <Features />
         <Parallax />
         <Features2 />
-        <Features3 />
         <Contact />
+        <Features3 />
         <Footer />
       </div>
     </main>
