@@ -4,6 +4,7 @@ import { env } from "./env";
 
 //lazy client - só quando necessário
 let supabaseClient: SupabaseClient | null = null;
+
 // func para supabase client com lazy init, usando as variaveis de .env.ts
 function getSupabaseClient() {
   if (supabaseClient) {
@@ -17,6 +18,13 @@ function getSupabaseClient() {
   return supabaseClient;
 }
 
-// client supabase singleton, exporta como const para todo app
-export const supabase = getSupabaseClient();
+// client supabase singleton com Proxy para lazy loading
+// Só cria o cliente quando acessado pela primeira vez
+export const supabase = new Proxy({} as SupabaseClient, {
+  get(target, prop) {
+    const client = getSupabaseClient();
+    const value = client[prop as keyof SupabaseClient];
+    return typeof value === 'function' ? value.bind(client) : value;
+  }
+});
 

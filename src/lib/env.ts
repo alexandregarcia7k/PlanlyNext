@@ -49,10 +49,22 @@ function validateEnv(): Env {
 }
 
 /**
- * Variáveis de ambiente validadas
- * Exportadas como constante para uso em toda aplicação
+ * Cache para as variáveis validadas
  */
-export const env = validateEnv();
+let cachedEnv: Env | null = null;
+
+/**
+ * Variáveis de ambiente validadas (lazy loading)
+ * Só valida quando acessado pela primeira vez
+ */
+export const env = new Proxy({} as Env, {
+  get(target, prop) {
+    if (!cachedEnv) {
+      cachedEnv = validateEnv();
+    }
+    return cachedEnv[prop as keyof Env];
+  }
+});
 
 /**
  * Helper para verificar se está em produção
