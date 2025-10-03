@@ -1,15 +1,23 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { loadEnv } from 'vite';
 
-export default defineConfig({
-  plugins: [react()],
-  test: {
-    // 🚀 OTIMIZAÇÃO 1: Use 'node' por padrão (10x mais rápido)
-    // Só use jsdom quando realmente precisar testar componentes React
-    environment: 'node',
-    globals: true,
-    setupFiles: ['./vitest.setup.ts'],
+export default defineConfig(({ mode }) => {
+  // Carregar .env.local para testes
+  const env = loadEnv(mode, process.cwd(), '');
+
+  return {
+    plugins: [react()],
+    test: {
+      // 🚀 OTIMIZAÇÃO 1: Use 'node' por padrão (10x mais rápido)
+      // Só use jsdom quando realmente precisar testar componentes React
+      environment: 'node',
+      globals: true,
+      setupFiles: ['./vitest.setup.ts'],
+
+      // Injetar variáveis de ambiente nos testes
+      env,
 
     // 🚀 OTIMIZAÇÃO 2: Executar testes em paralelo
     pool: 'threads',
@@ -57,9 +65,10 @@ export default defineConfig({
       cleanOnRerun: true,
     },
   },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+      },
     },
-  },
+  };
 });

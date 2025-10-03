@@ -83,16 +83,17 @@ describe('Email Security Validator', () => {
     });
   });
 
-  describe('Domínios não confiáveis', () => {
-    it('deve rejeitar domínio desconhecido', () => {
-      const resultado = validateEmailSecurity('user@dominioestranho.xyz');
+  describe('Domínios descartáveis conhecidos', () => {
+    it('deve rejeitar 10minutemail.com', () => {
+      const resultado = validateEmailSecurity('user@10minutemail.com');
       expect(resultado.valid).toBe(false);
-      expect(resultado.error).toContain('confiável');
+      expect(resultado.error).toContain('temporário');
     });
 
-    it('deve rejeitar domínio suspeito', () => {
-      const resultado = validateEmailSecurity('user@fake-email-provider.net');
+    it('deve rejeitar mailinator.com', () => {
+      const resultado = validateEmailSecurity('user@mailinator.com');
       expect(resultado.valid).toBe(false);
+      expect(resultado.error).toContain('temporário');
     });
   });
 });
