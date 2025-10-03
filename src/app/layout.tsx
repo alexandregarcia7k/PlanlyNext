@@ -3,7 +3,8 @@ import React from 'react';
 import { GeistSans } from 'geist/font/sans';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/kibo-ui/landingpageui/sonner';
-
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const geistSans = GeistSans;
 
@@ -29,6 +30,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }):
             {children}
             <Toaster />
           </div>
+          <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>

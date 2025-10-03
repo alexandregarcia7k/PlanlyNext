@@ -1,29 +1,22 @@
-import { createClient } from '@supabase/supabase-js';
-import type { SupabaseClient } from '@supabase/supabase-js';
+import { createClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
+import { env } from "./env";
 
-// Cliente lazy - criado apenas quando necessário
+//lazy client - só quando necessário
 let supabaseClient: SupabaseClient | null = null;
-
-// Função para obter cliente Supabase com lazy initialization
+// func para supabase client com lazy init, usando as variaveis de .env.ts
 function getSupabaseClient() {
   if (supabaseClient) {
     return supabaseClient;
   }
 
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-  
-  if (!supabaseUrl) {
-    throw new Error('NEXT_PUBLIC_SUPABASE_URL não está configurada');
-  }
-  
-  if (!supabaseKey) {
-    throw new Error('NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY não está configurada');
-  }
-  
-  supabaseClient = createClient(supabaseUrl, supabaseKey);
+  supabaseClient = createClient(
+    env.NEXT_PUBLIC_SUPABASE_URL,
+    env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+  );
   return supabaseClient;
 }
 
-// Exportar getter ao invés de instância direta
+// client supabase singleton, exporta como const para todo app
 export const supabase = getSupabaseClient();
+

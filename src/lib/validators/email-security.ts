@@ -37,7 +37,18 @@ const BLACKLISTED_EMAILS = [
 
 export function validateEmailSecurity(email: string): { valid: boolean; error?: string } {
   const emailLower = email.toLowerCase();
+
+  // Validação básica de formato
+  if (!emailLower || !emailLower.includes('@') || emailLower.split('@').length !== 2) {
+    return { valid: false, error: "Formato de email inválido" };
+  }
+
   const domain = emailLower.split('@')[1];
+
+  // Verificar se o domínio existe
+  if (!domain || domain.length === 0) {
+    return { valid: false, error: "Domínio de email inválido" };
+  }
 
   // Verificar emails específicos bloqueados
   if (BLACKLISTED_EMAILS.includes(emailLower)) {

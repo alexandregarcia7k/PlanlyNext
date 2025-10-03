@@ -2,24 +2,16 @@
 
 import { Resend } from "resend";
 import { createClient } from '@supabase/supabase-js';
-import { Redis } from "@upstash/redis";
 import { z } from 'zod';
+import { headers } from "next/headers";
+import { env } from "@/lib/env";
+import { logger } from "@/lib/logger";
+import { redis } from "@/lib/redis";
+import { RATE_LIMIT, ERROR_MESSAGES } from "@/lib/constants";
 import { contactSchema } from "@/lib/validators/contact";
 import { validateEmailSecurity } from "@/lib/validators/email-security";
 import { escapeHtml, nlToBr } from "@/lib/utils/html-escape";
-import { headers } from "next/headers";
-
-// Types
-type ActionResponse = {
-  success: boolean;
-  error?: string;
-};
-
-// Cliente Redis para rate limiting
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL!,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
-});
+import type { ActionResponse } from "@/types";
 
 // Utilitários
 function createErrorResponse(error: string): ActionResponse {
@@ -31,40 +23,37 @@ function createSuccessResponse(): ActionResponse {
 }
 
 function createSupabaseClient() {
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseKey = process.env.SUPABASE_SECRET_KEY;
-  
-  if (!supabaseUrl || !supabaseKey) {
-    throw new Error('Variáveis de ambiente do Supabase não configuradas');
-  }
-  
-  return createClient(supabaseUrl, supabaseKey, {
+  return createClient(env.SUPABASE_URL, env.SUPABASE_SECRET_KEY, {
     db: { schema: 'api' },
     auth: { autoRefreshToken: false, persistSession: false }
   });
 }
+
 
 const newsletterSchema = z.object({
   email: z.string().email("Email inválido").toLowerCase(),
 });
 
 export async function sendContactEmail(formData: FormData): Promise<ActionResponse> {
+  let ip = "unknown"; // Declarado fora do try para uso no catch
+
   try {
     // Rate limiting com Redis
     const headersList = await headers();
-    const ip = headersList.get("x-forwarded-for") || "unknown";
-    const rateLimitKey = `rate_limit:contact:${ip}`;
-    
-    const lastAttempt = await redis.get(rateLimitKey);
-    if (lastAttempt) {
-      return createErrorResponse("Aguarde 1 minuto antes de enviar outra mensagem");
+    ip = headersList.get("x-forwarded-for") || "unknown";
+    const RateLimitKey = `contact_rate_limit_${ip}`;
+
+    const rateLimitResult = await redis.checkRateLimit(RateLimitKey);
+    if (rateLimitResult.blocked) {
+      return createErrorResponse(ERROR_MESSAGES.RATE_LIMIT_EXCEEDED);
     }
-    
+
     // Honeypot anti-spam
     const honeypot = formData.get("website") as string;
     if (honeypot) {
-      return createErrorResponse("Spam detectado");
+      return createErrorResponse(ERROR_MESSAGES.SPAM_DETECTED);
     }
+
 
     // Extrair e validar dados
     const rawData = {
@@ -87,11 +76,7 @@ export async function sendContactEmail(formData: FormData): Promise<ActionRespon
       return createErrorResponse(emailSecurity.error ?? "Erro de validação de email");
     }
 
-    if (!process.env.RESEND_API_KEY) {
-      return createErrorResponse("Configuração de email não encontrada");
-    }
-
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const resend = new Resend(env.RESEND_API_KEY);
 
     // Sanitizar dados
     const safeName = escapeHtml(name);
@@ -100,7 +85,7 @@ export async function sendContactEmail(formData: FormData): Promise<ActionRespon
     const safeMessage = nlToBr(message);
     const safeIp = escapeHtml(ip);
 
-    const emailHtml = 
+    const emailHtml =
       '<h2>Nova mensagem de contato</h2>\n' +
       '<p><strong>Nome:</strong> ' + safeName + '</p>\n' +
       '<p><strong>Email:</strong> ' + safeEmail + '</p>\n' +
@@ -117,11 +102,15 @@ export async function sendContactEmail(formData: FormData): Promise<ActionRespon
       html: emailHtml,
     });
 
-    await redis.set(rateLimitKey, Date.now(), { ex: 60 });
+    await redis.setRateLimit(RateLimitKey, RATE_LIMIT.CONTACT_FORM.WINDOW_SECONDS);
     return createSuccessResponse();
   } catch (error) {
-    console.error('Erro ao enviar email:', error);
-    return createErrorResponse("Erro interno do servidor");
+    logger.error('Erro ao enviar email de contato',
+      error, {
+      context: `sendContactEmail`,
+      ip
+    });
+    return createErrorResponse(ERROR_MESSAGES.INTERNAL_ERROR);
   }
 }
 
@@ -129,9 +118,9 @@ export async function subscribeNewsletter(formData: FormData): Promise<ActionRes
   try {
     const rawData = { email: formData.get("email") as string };
     const validationResult = newsletterSchema.safeParse(rawData);
-    
+
     if (!validationResult.success) {
-      return createErrorResponse("Email inválido");
+      return createErrorResponse(ERROR_MESSAGES.INVALID_EMAIL);
     }
 
     const { email } = validationResult.data;
@@ -143,15 +132,17 @@ export async function subscribeNewsletter(formData: FormData): Promise<ActionRes
 
     if (error) {
       if (error.code === '23505') {
-        return createErrorResponse("Este email já está inscrito na newsletter");
+        return createErrorResponse(ERROR_MESSAGES.EMAIL_ALREADY_SUBSCRIBED);
       }
-      return createErrorResponse("Erro ao inscrever na newsletter");
+      return createErrorResponse(ERROR_MESSAGES.NEWSLETTER_SUBSCRIPTION_ERROR);
     }
 
     return createSuccessResponse();
   } catch (error) {
-    console.error('Erro ao inscrever newsletter:', error);
-    return createErrorResponse("Erro interno do servidor");
+    logger.error('Erro ao processar inscrição na newsletter', error, {
+      context: 'subscribeNewsletter',
+    });
+    return createErrorResponse(ERROR_MESSAGES.INTERNAL_ERROR);
   }
 }
 
