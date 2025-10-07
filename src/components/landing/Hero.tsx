@@ -187,28 +187,28 @@ export default function Hero() {
             <AnimatedGroup
               variants={animationVariants.imageEntrance}
             >
-              <div className="mask-b-from-55% relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
-                <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
-                    {/* ⚡ Performance: Imagem WebP 1920x933 (LCP - priority) -78% vs PNG */}
+              <div className="mask-b-from-55% relative mt-8 px-4 sm:px-6 sm:mt-12 md:mt-20 md:px-8">
+                <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-2 sm:p-4 shadow-lg shadow-zinc-950/15 ring-1">
+                    {/* ⚡ Performance: Imagem WebP 1920x933 (LCP - priority apenas na primeira visível) -78% vs PNG */}
                     <Image
-                      className="bg-background relative hidden rounded-2xl dark:block"
+                      className="bg-background relative hidden rounded-2xl dark:block w-full h-auto"
                       src="/assets/kanbandark.webp"
                       alt="app screen"
                       width={1920}
                       height={933}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, (max-width: 1280px) 80vw, 1152px"
                       quality={85}
                       priority
                     />
                   <Image
-                    className="z-2 border-border/25 relative rounded-2xl border dark:hidden"
+                    className="z-2 border-border/25 relative rounded-2xl border dark:hidden w-full h-auto"
                     src="/assets/kanbanlight.webp"
                     alt="app screen"
                     width={1920}
                     height={933}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, (max-width: 1280px) 80vw, 1152px"
                     quality={85}
-                    priority
+                    loading="eager"
                   />
                 </div>
               </div>

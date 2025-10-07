@@ -31,7 +31,7 @@ export default function FeaturesSection() {
                     </AnimatedElement>
                 </div>
                 <ScrollTiltImage
-                    className="relative -mx-4 pr-3 pt-3 md:-mx-12"
+                    className="relative pr-3 pt-3"
                 >
                     <div className="perspective-midrange relative">
                         <div className="rotate-x-6 -skew-2">
@@ -45,24 +45,24 @@ export default function FeaturesSection() {
                                     transformStyle: 'preserve-3d'
                                 }}
                             >
-                                {/* ⚡ Performance: Imagem WebP 1400x843 -78% vs PNG */}
+                                {/* ⚡ Performance: Imagem WebP 1400x843 -78% vs PNG, lazy loading abaixo da dobra */}
                                 <Image
-                                    className="relative hidden rounded-2xl dark:block"
+                                    className="relative hidden rounded-2xl dark:block w-full h-auto"
                                     src="/assets/notesdark.webp"
                                     alt="notes interface dark mode"
                                     width={1400}
                                     height={843}
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1400px"
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
                                     quality={85}
                                     loading="lazy"
                                 />
                                 <Image
                                     src="/assets/noteslight.webp"
-                                    className="z-2 border-border/25 relative rounded-2xl border dark:hidden"
+                                    className="z-2 border-border/25 relative rounded-2xl border dark:hidden w-full h-auto"
                                     alt="notes interface light mode"
                                     width={1400}
                                     height={843}
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1400px"
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
                                     quality={85}
                                     loading="lazy"
                                 />
