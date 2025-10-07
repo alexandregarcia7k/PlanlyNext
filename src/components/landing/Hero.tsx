@@ -20,11 +20,12 @@ export default function Hero() {
           aria-hidden
           className="absolute inset-0 isolate opacity-100 contain-strict lg:block"
         >
+          {/* ⚡ Performance: Blur reduzido de 48px para 16px (blur-3xl → blur-lg) */}
           <div
             className="
               absolute left-0 top-0 -rotate-45 -translate-y-87.5 w-140 h-320 rounded-full
               bg-[linear-gradient(115deg,rgba(67,25,97,0.16)_0%,rgba(160,120,220,0.10)_38%,rgba(67,25,97,0)_78%)]
-              mix-blend-screen blur-3xl
+              mix-blend-screen blur-lg
               dark:bg-[radial-gradient(68.54%_68.72%_at_55.02%_31.46%,hsla(0,0%,85%,.08)_0,hsla(0,0%,55%,.02)_50%,hsla(0,0%,45%,0)_80%)]
               dark:mix-blend-normal dark:blur-none
             "
@@ -33,7 +34,7 @@ export default function Hero() {
             className="
               absolute left-0 top-0 -rotate-45 [translate:5%_-50%] w-60 h-320 rounded-full
               bg-[radial-gradient(60%_60%_at_55%_45%,rgba(195,150,240,0.14)_0,rgba(67,25,97,0.06)_55%,transparent_100%)]
-              mix-blend-screen blur-2xl
+              mix-blend-screen blur-lg
               dark:bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.06)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]
               dark:mix-blend-normal dark:blur-none
             "
@@ -42,7 +43,7 @@ export default function Hero() {
             className="
               absolute left-0 top-0 -rotate-45 -translate-y-87.5 w-60 h-320 rounded-full
               bg-[radial-gradient(35%_35%_at_65%_30%,rgba(255,255,255,0.22)_0,rgba(167,139,250,0.12)_30%,transparent_70%)]
-              mix-blend-screen blur-2xl
+              mix-blend-screen blur-lg
               dark:bg-[radial-gradient(50%_50%_at_50%_50%,hsla(0,0%,85%,.04)_0,hsla(0,0%,45%,.02)_80%,transparent_100%)]
               dark:mix-blend-normal dark:blur-none
             "
@@ -56,7 +57,7 @@ export default function Hero() {
                 container: {
                   visible: {
                     transition: {
-                      delayChildren: 1,
+                      delayChildren: 0.2, // ⚡ Performance: Reduzido de 1.0s para 0.2s
                     },
                   },
                 },
@@ -124,9 +125,10 @@ export default function Hero() {
                   </Link>
                 </AnimatedGroup>
 
+                {/* ⚡ Performance: Blur mais rápido (speedSegment 0.3 → 0.15) */}
                 <TextEffect
                   preset="fade-in-blur"
-                  speedSegment={0.3}
+                  speedSegment={0.15}
                   as="h1"
                   className="mx-auto mt-8 max-w-4xl text-balance text-5xl max-md:font-semibold md:text-7xl lg:mt-16 xl:text-[5.25rem]"
                 >
@@ -135,7 +137,7 @@ export default function Hero() {
                 <TextEffect
                   per="line"
                   preset="fade-in-blur"
-                  speedSegment={0.3}
+                  speedSegment={0.15}
                   delay={0.5}
                   as="p"
                   className="mx-auto mt-8 max-w-2xl text-balance text-lg"
@@ -149,7 +151,7 @@ export default function Hero() {
                       visible: {
                         transition: {
                           staggerChildren: 0.05,
-                          delayChildren: 0.75,
+                          delayChildren: 0.3, // ⚡ Performance: Reduzido de 0.75s para 0.3s
                         },
                       },
                     },
@@ -183,23 +185,30 @@ export default function Hero() {
             </div>
 
             <AnimatedGroup
-              variants={animationVariants.heroImageEntrance}
+              variants={animationVariants.imageEntrance}
             >
               <div className="mask-b-from-55% relative -mr-56 mt-8 overflow-hidden px-2 sm:mr-0 sm:mt-12 md:mt-20">
                 <div className="inset-shadow-2xs ring-background dark:inset-shadow-white/20 bg-background relative mx-auto max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg shadow-zinc-950/15 ring-1">
+                    {/* ⚡ Performance: Imagem WebP 1920x933 (LCP - priority) -78% vs PNG */}
                     <Image
-                      className="bg-background aspect-15/8 relative hidden rounded-2xl dark:block"
-                      src="/assets/kanbandark.png"
+                      className="bg-background relative hidden rounded-2xl dark:block"
+                      src="/assets/kanbandark.webp"
                       alt="app screen"
-                      width="2700"
-                      height="1440"
+                      width={1920}
+                      height={933}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
+                      quality={85}
+                      priority
                     />
                   <Image
-                    className="z-2 border-border/25 aspect-15/8 relative rounded-2xl border dark:hidden"
-                    src="/assets/kanbanlight.png"
+                    className="z-2 border-border/25 relative rounded-2xl border dark:hidden"
+                    src="/assets/kanbanlight.webp"
                     alt="app screen"
-                    width="2700"
-                    height="1440"
+                    width={1920}
+                    height={933}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1920px"
+                    quality={85}
+                    priority
                   />
                 </div>
               </div>

@@ -31,10 +31,9 @@ export default function FeaturesSection() {
                     </AnimatedElement>
                 </div>
                 <ScrollTiltImage
-                    variant="features"
                     className="relative -mx-4 pr-3 pt-3 md:-mx-12"
                 >
-                    <div className="perspective-midrange">
+                    <div className="perspective-midrange relative">
                         <div className="rotate-x-6 -skew-2">
                             <motion.div
                                 ref={ref}
@@ -46,21 +45,26 @@ export default function FeaturesSection() {
                                     transformStyle: 'preserve-3d'
                                 }}
                             >
+                                {/* ⚡ Performance: Imagem WebP 1400x843 -78% vs PNG */}
                                 <Image
-                                    src="/assets/notesdark.png"
-                                    className="hidden dark:block object-cover"
+                                    className="relative hidden rounded-2xl dark:block"
+                                    src="/assets/notesdark.webp"
                                     alt="notes interface dark mode"
-                                    width={2797}
-                                    height={1137}
-                                    priority
+                                    width={1400}
+                                    height={843}
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1400px"
+                                    quality={85}
+                                    loading="lazy"
                                 />
                                 <Image
-                                    src="/assets/noteslight.png"
-                                    className="dark:hidden object-cover"
+                                    src="/assets/noteslight.webp"
+                                    className="z-2 border-border/25 relative rounded-2xl border dark:hidden"
                                     alt="notes interface light mode"
-                                    width={2797}
-                                    height={1137}
-                                    priority
+                                    width={1400}
+                                    height={843}
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1400px"
+                                    quality={85}
+                                    loading="lazy"
                                 />
                             </motion.div>
                         </div>

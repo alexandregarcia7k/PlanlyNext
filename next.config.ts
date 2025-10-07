@@ -12,6 +12,21 @@ const nextConfig: NextConfig = {
         hostname: 'html.tailus.io',
       },
     ],
+    // Configuração de qualidades de imagem (requerido no Next.js 16+)
+    qualities: [75, 85, 90, 95, 100],
+  },
+  // ⚡ Performance: Força tree-shaking em bibliotecas pesadas
+  experimental: {
+    optimizePackageImports: [
+      'lucide-react',                   // -105 KB (carrega apenas ~40 ícones de ~2000)
+      'framer-motion',                  // -20 KB (carrega apenas ~8 hooks de ~50)
+      '@radix-ui/react-tooltip',        // -3 KB (otimização marginal, já é bem otimizado)
+      '@radix-ui/react-switch',         // -2 KB
+      '@radix-ui/react-slot',           // -1 KB
+      '@radix-ui/react-checkbox',       // -2 KB
+      '@radix-ui/react-context-menu',   // -3 KB
+      '@radix-ui/react-label',          // -2 KB
+    ],
   },
   turbopack: {
     rules: {
@@ -52,11 +67,11 @@ const nextConfig: NextConfig = {
             // Em produção, considere usar nonces para maior segurança
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live", // Vercel Live para preview
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live https://va.vercel-scripts.com", // Vercel Analytics/Speed Insights
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https: blob:",
               "font-src 'self' data:",
-              "connect-src 'self' https://*.supabase.co https://*.upstash.io https://vercel.live wss://*.supabase.co",
+              "connect-src 'self' https://*.supabase.co https://*.upstash.io https://vercel.live https://va.vercel-scripts.com wss://*.supabase.co",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",

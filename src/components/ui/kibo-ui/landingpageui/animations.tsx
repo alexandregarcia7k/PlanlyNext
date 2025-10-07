@@ -8,8 +8,8 @@ import React from 'react';
 // ============================================
 
 export const animationVariants = {
-  // Variantes para entrada com blur (Hero)
-  heroImageEntrance: {
+  // Variante unificada para entrada com blur (usado em Hero e Features)
+  imageEntrance: {
     container: {
       visible: {
         transition: {
@@ -35,6 +35,17 @@ export const animationVariants = {
         },
       },
     },
+    // Versão simples (sem container) para Features
+    hidden: {
+      opacity: 0,
+      y: 60,
+      filter: 'blur(20px)',
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+    },
   },
 
   // Variantes para texto simples (Hero)
@@ -58,7 +69,7 @@ export const animationVariants = {
     },
   },
 
-  // Variantes para entrada suave (Features)
+  // Variantes para texto simples (Features)
   featuresText: {
     hidden: {
       opacity: 0,
@@ -69,53 +80,34 @@ export const animationVariants = {
       y: 0,
     },
   },
-
-  // Variantes para entrada com blur (Features)
-  featuresImage: {
-    hidden: {
-      opacity: 0,
-      y: 60,
-      filter: 'blur(20px)',
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: 'blur(0px)',
-    },
-  },
 };
 
 // ============================================
 // CUSTOM HOOKS
 // ============================================
 
+// ⚡ Performance: Reduzido complexidade - removido rotateX, mantido rotateY + scale, apenas 2 springs
 export const useScrollTilt = (ref: React.RefObject<HTMLDivElement>) => {
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  // Mapeamento das rotações
-  const rawRotateY = useTransform(scrollYProgress, [0, 0.5, 1], ['-25deg', '0deg', '25deg']);
-  const rawRotateX = useTransform(scrollYProgress, [0, 0.5, 1], ['8deg', '0deg', '-8deg']);
+  // Mapeamento da rotação Y (mantido para efeito 3D)
+  const rawRotateY = useTransform(scrollYProgress, [0, 0.5, 1], ['-15deg', '0deg', '15deg']); // Reduzido de 25deg para 15deg
 
-  // Efeito de escala
-  const rawScale = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.7, 1], [0.85, 0.95, 1.1, 0.95, 0.85]);
+  // Efeito de escala (simplificado)
+  const rawScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.90, 1.05, 0.90]); // Simplificado de 5 pontos para 3
 
-  // Controle da máscara
-  const maskOpacity = useTransform(scrollYProgress, [0, 0.25, 0.4, 0.6, 0.75, 1], [0.7, 0.4, 0.1, 0.1, 0.4, 0.7]);
-
-  // Springs para suavização
+  // Springs para suavização (apenas 2 em vez de 3)
   const rotateY = useSpring(rawRotateY, { damping: 35, stiffness: 120 });
-  const rotateX = useSpring(rawRotateX, { damping: 35, stiffness: 120 });
   const scale = useSpring(rawScale, { damping: 35, stiffness: 120 });
 
   return {
     scrollYProgress,
     rotateY,
-    rotateX,
+    rotateX: '0deg', // ⚡ Performance: rotateX removido, retorna valor estático
     scale,
-    maskOpacity,
   };
 };
 
@@ -184,25 +176,22 @@ export const AnimatedElement: React.FC<AnimatedElementProps> = ({
 interface ScrollTiltImageProps {
   children: React.ReactNode;
   className?: string;
-  variant?: 'hero' | 'features';
 }
 
 export const ScrollTiltImage: React.FC<ScrollTiltImageProps> = ({
   children,
   className,
-  variant = 'features'
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
-  const { rotateY, rotateX, scale, maskOpacity } = useScrollTilt(ref as React.RefObject<HTMLDivElement>);
+  const { rotateY, rotateX, scale } = useScrollTilt(ref as React.RefObject<HTMLDivElement>);
 
-  const entranceVariant = variant === 'hero'
-    ? animationVariants.heroImageEntrance
-    : animationVariants.featuresImage;
+  // Usa a variant unificada imageEntrance
+  const entranceVariant = animationVariants.imageEntrance;
 
   return (
     <motion.div
       ref={ref}
-      className={className}
+      className={`relative ${className}`}
       style={{
         rotateY,
         rotateX,
